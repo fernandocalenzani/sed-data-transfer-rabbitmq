@@ -1,0 +1,42 @@
+{
+  "services": {
+    "detection": {
+      "D-FACE": {
+        "version": "0.0.1",
+        "code": "DFk",
+        "description": "Face Detection"
+      },
+      "D-OBJ": {
+        "version": "0.0.1",
+        "code": "DO80",
+        "description": "Object Detection"
+      }
+    },
+
+    "recognition": {
+      "R-ACT": {
+        "version": "0.0.1",
+        "code": "RA1",
+        "description": "Action Recognition"
+      },
+      "R-EMOT": {
+        "version": "0.0.1",
+        "code": "RE9",
+        "description": "Emotion Recognition"
+      },
+      "R-FACE": {
+        "version": "0.0.1",
+        "code": "RF1",
+        "description": "Face Recognition"
+      }
+    },
+
+    "tracker":{
+      "T-OBJ": {
+        "version": "0.0.1",
+        "code": "TOk",
+        "description": "Tracking Objects"
+      }
+    }
+  }
+}

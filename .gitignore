@@ -1,0 +1,9 @@
+data/
+.env
+.venv
+__pycache__/
+*.hdf5
+lbph_classifier_II.yml
+secrets
+dist
+sdist
