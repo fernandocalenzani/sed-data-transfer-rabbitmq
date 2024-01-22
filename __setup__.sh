@@ -1,8 +1,16 @@
 #!/bin/sh
 
+echo "-----------------------------------"
+echo "| PROJECT       | MIMIR            |"
+echo "| VERSION       | 0.1.0            |"
+echo "| COMPANY       | ARISE TECHNOLOGY |"
+echo "-----------------------------------"
+echo ""
+
 #________________________________________________________________
 # PRE-BUILD
 #________________________________________________________________
+echo "[MIMIR] Starting pre-build..."
 
 SRC_FOLDERS=(
   ./setup/secrets/.env
@@ -64,4 +72,8 @@ done
 #________________________________________________________________
 # Docker
 #________________________________________________________________
-docker-compose up --build
+echo "[MIMIR] Pre-build concludes successfully"
+echo ""
+echo "[MIMIR] starting docker"
+
+#docker-compose up --build

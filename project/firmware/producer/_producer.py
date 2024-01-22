@@ -1,14 +1,16 @@
-import cv2
-import numpy as np
 import json
 import os
-from dotenv import load_dotenv
+
+import cv2
 import libs.broker.rabbitmq as Broker
+import numpy as np
+from dotenv import load_dotenv
+
 
 def send_producer(payload):
 
     load_dotenv()
-    _env_host_dir = os.path.join("/firmware", 'config', 'hosts.json')
+    _env_host_dir = os.path.join('/config', 'hosts.json')
 
     with open(_env_host_dir, 'r') as hosts:
         _data_host = json.load(hosts)

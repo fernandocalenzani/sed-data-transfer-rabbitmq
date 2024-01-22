@@ -1,9 +1,5 @@
-import json
-import os
 import pickle
-
 import pika
-from dotenv import load_dotenv
 
 
 class RabbitMQ:
