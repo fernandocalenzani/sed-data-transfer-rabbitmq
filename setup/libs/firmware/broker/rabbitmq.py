@@ -1,4 +1,5 @@
 import pickle
+
 import pika
 
 
@@ -57,6 +58,8 @@ class RabbitMQ:
         return pickle.loads(frame_bytes)
 
     def start(self, callback_message, queue):
-        print(f"Listening on RabbitMQ channel")
+        print(f"[MIMIR] Listening on RabbitMQ channel")
+        print(f" ")
+
         self.set_queue(queue, callback_message)
         self.__channel.start_consuming()

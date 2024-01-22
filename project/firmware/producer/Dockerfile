@@ -2,10 +2,10 @@
 FROM python:3.10
 
 # Set the working directory inside the container
-WORKDIR /firmware
+WORKDIR /firmware-producer
 
 # Copy the requirements file to the working directory
-COPY requirements.txt /firmware/
+COPY requirements.txt /firmware-producer/
 
 # Update and upgrade system packages
 RUN apt-get update && \
@@ -24,7 +24,7 @@ RUN apt-get update && \
   apt-get install -y libgl1-mesa-glx
 
 # Copy the entire local directory contents into the container's working directory
-COPY . /firmware/
+COPY . /firmware-producer/
 
 # Specify the default command to be executed when the container is started
-CMD ["python", "__main.py"]
+CMD ["python", "__main__.py"]

@@ -1,4 +1,5 @@
 import _producer as Producer
+import libs.checker.check_host as Checker
 
 
 def main():
@@ -6,4 +7,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    print("[MIMIR] STARTING PRODUCER")
+
+    print("[MIMIR] checking dependencies...")
+    if Checker.ping("localhost", ):
+        print("[MIMIR] Starting producer")
+
+        main()
+    else:
+        print("[MIMIR] host not found, ending producer")

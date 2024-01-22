@@ -1,7 +1,8 @@
-version: '3.3'
+version: '3.6'
 services:
   rabbitmq:
     image: "rabbitmq:3-management"
+    restart: always
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -9,10 +10,22 @@ services:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=admin
 
-  firmware:
+  firmware-consumer:
     build:
-      context: ./project/firmware
+      context: ./project/firmware/consumer
+    ports:
+      - "4000:4000"
+    image: "mimir/firmware-consumer:0.1.0"
+    working_dir: /firmware-consumer
+    depends_on:
+      - rabbitmq
+
+  firmware-producer:
+    build:
+      context: ./project/firmware/producer
     ports:
       - "3000:3000"
-    image: "mimir/firmware:0.0.1"
-    working_dir: /firmware
+    image: "mimir/firmware-producer:0.1.0"
+    working_dir: /firmware-producer
+    depends_on:
+      - firmware-consumer

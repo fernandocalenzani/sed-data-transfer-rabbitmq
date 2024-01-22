@@ -27,4 +27,4 @@ RUN apt-get update && \
 COPY . /firmware-consumer/
 
 # Specify the default command to be executed when the container is started
-CMD ["python", "__main.py"]
+CMD ["python", "__main__.py"]

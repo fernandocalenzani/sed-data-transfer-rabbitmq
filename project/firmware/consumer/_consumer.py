@@ -1,11 +1,10 @@
-import json
 import os
 import pickle
 import random
 
 import cv2
 import libs.broker.rabbitmq as Broker
-from dotenv import load_dotenv
+import libs.utils.read_env as Reader
 
 
 def callback(ch, method, properties, payload):
@@ -27,14 +26,10 @@ def send_response_to_client(payload):
 
 
 def start_consumer():
-    load_dotenv()
-    _env_host_dir = os.path.join('/config', 'hosts.json')
+    __data = Reader.read_host('host.json')
 
-    with open(_env_host_dir, 'r') as hosts:
-        _data_host = json.load(hosts)
-
-    __host = _data_host["HOST_RABBITMQ"]["host"]
-    __port = _data_host["HOST_RABBITMQ"]["port"]
+    __host = __data["HOST_RABBITMQ"]["host"]
+    __port = __data["HOST_RABBITMQ"]["port"]
     __username = os.getenv("RABBIT_PASSWORD")
     __pass = os.getenv("RABBIT_USERNAME")
 
