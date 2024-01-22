@@ -13,6 +13,11 @@ SRC_FOLDERS=(
   ./setup/config
   ./setup/config
   ./setup/config
+
+  ./setup/libs/firmware
+  ./setup/libs/ai
+  ./setup/libs/backend
+  ./setup/libs/frontend
 )
 
 DEST_FOLDERS=(
@@ -20,10 +25,15 @@ DEST_FOLDERS=(
   ./project/ai/.env
   ./project/backend/.env
 
-  ./project/firmware
-  ./project/ai
-  ./project/backend
-  ./project/frontend
+  ./project/firmware/config
+  ./project/ai/config
+  ./project/backend/config
+  ./project/frontend/config
+
+  ./project/firmware/libs
+  ./project/ai/libs
+  ./project/backend/libs
+  ./project/frontend/libs
 )
 
 remove_directories() {

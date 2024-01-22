@@ -7,18 +7,11 @@ from dotenv import load_dotenv
 
 
 class RabbitMQ:
-    def __init__(self) -> None:
-        load_dotenv()
-
-        _env_host_dir = os.path.join("/firmware", 'libs', 'shared', 'hosts.json')
-
-        with open(_env_host_dir, 'r') as hosts:
-            _data_host = json.load(hosts)
-
-        self.__host = _data_host["HOST_RABBITMQ"]["host"]
-        self.__port = _data_host["HOST_RABBITMQ"]["port"]
-        self.__username = os.getenv("RABBIT_PASSWORD")
-        self.__pass = os.getenv("RABBIT_USERNAME")
+    def __init__(self, host, port, username, password) -> None:
+        self.__host = host
+        self.__port = port
+        self.__username = username
+        self.__pass = password
 
         self.__channel = self.__create_channel()
 

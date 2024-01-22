@@ -1,0 +1,10 @@
+{
+  "HOST_APP_SERVER": {
+    "host":"localhost:5001",
+    "port":5001
+  },
+  "HOST_RABBITMQ": {
+    "host":"localhost",
+    "port":5672
+  }
+}
