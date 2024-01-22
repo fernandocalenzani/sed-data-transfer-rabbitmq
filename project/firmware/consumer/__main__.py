@@ -8,15 +8,18 @@ def main():
 
 
 if __name__ == "__main__":
-    print("[MIMIR] STARTING CONSUMER")
+    print("[MIMIR] --CONSUMER--")
 
-    __data = Reader.read_host('host.json')
+    __data = Reader.read_host('project_config.json')
+    __host = __data['hosts']["HOST_CONSUMER"]["host"]
+    __port = __data['hosts']["HOST_CONSUMER"]["port"]
+    __attempts = __data['settings']["attempt_recovery"]
+    __timeout = __data['settings']["timeout_in_sec"]
 
-    __host = __data["HOST_CONSUMER"]["host"]
-    __port = __data["HOST_CONSUMER"]["port"]
     print("[MIMIR] checking dependencies...")
-    if Checker.ping(__host, __port, 1000, 15):
 
+    if Checker.ping(__host, __port, __attempts, __timeout):
+        print("[MIMIR] Starting consumer")
         main()
     else:
         print("[MIMIR] broker not found, ending consumer")

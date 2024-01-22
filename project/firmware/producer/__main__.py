@@ -8,15 +8,18 @@ def main():
 
 
 if __name__ == "__main__":
-    print("[MIMIR] STARTING PRODUCER")
-    __data = Reader.read_host('host.json')
+    print("[MIMIR] --PRODUCER--")
 
-    __host = __data["HOST_PRODUCER"]["host"]
-    __port = __data["HOST_PRODUCER"]["port"]
+    __data = Reader.read_host('project_config.json')
+    __host = __data['hosts']["HOST_PRODUCER"]["host"]
+    __port = __data['hosts']["HOST_PRODUCER"]["port"]
+    __attempts = __data['settings']["attempt_recovery"]
+    __timeout = __data['settings']["timeout_in_sec"]
+
     print("[MIMIR] checking dependencies...")
-    if Checker.ping(__host, __port, 1000, 15):
-        print("[MIMIR] Starting producer")
 
+    if Checker.ping(__host, __port, __attempts, __timeout):
+        print("[MIMIR] Starting producer")
         main()
     else:
         print("[MIMIR] host not found, ending producer")

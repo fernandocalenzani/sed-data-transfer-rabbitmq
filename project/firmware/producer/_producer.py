@@ -2,15 +2,14 @@ import os
 
 import cv2
 import libs.broker.rabbitmq as Broker
-import libs.utils.read_env as Reader
+import libs.utils.read_project_config as Reader
 import numpy as np
 
 
 def send_producer(payload):
-    __data = Reader.read_host('host.json')
-
-    __host = __data["HOST_RABBITMQ"]["host"]
-    __port = __data["HOST_RABBITMQ"]["port"]
+    __data = Reader.read_host('project_config.json')
+    __host = __data['hosts']["HOST_RABBITMQ"]["host"]
+    __port = __data['hosts']["HOST_RABBITMQ"]["port"]
     __username = os.getenv("RABBIT_PASSWORD")
     __pass = os.getenv("RABBIT_USERNAME")
 

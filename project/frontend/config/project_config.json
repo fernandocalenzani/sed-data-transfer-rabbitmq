@@ -1,0 +1,25 @@
+{
+  "hosts": {
+    "HOST_APP_SERVER": {
+      "host":"localhost",
+      "port":5000
+    },
+    "HOST_RABBITMQ": {
+      "host":"localhost",
+      "port":5672
+    },
+    "HOST_CONSUMER": {
+      "host":"localhost",
+      "port":4000
+    },
+    "HOST_PRODUCER": {
+      "host":"localhost",
+      "port":3000
+    }
+  },
+
+  "settings":{
+    "attempt_recovery": 10,
+    "timeout_in_sec": 15
+  }
+}

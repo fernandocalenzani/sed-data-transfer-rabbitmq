@@ -26,10 +26,10 @@ def send_response_to_client(payload):
 
 
 def start_consumer():
-    __data = Reader.read_host('host.json')
+    __data = Reader.read_host('project_config.json')
 
-    __host = __data["HOST_RABBITMQ"]["host"]
-    __port = __data["HOST_RABBITMQ"]["port"]
+    __host = __data['hosts']["HOST_RABBITMQ"]["host"]
+    __port = __data['hosts']["HOST_RABBITMQ"]["port"]
     __username = os.getenv("RABBIT_PASSWORD")
     __pass = os.getenv("RABBIT_USERNAME")
 

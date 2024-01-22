@@ -159,7 +159,7 @@
             <li><strong>Consumer:</strong> Recebe dados do RabbitMQ e realiza pré-processamento.</li>
             <li><strong>Producer:</strong> Envia dados para o RabbitMQ.</li>
             <li><strong>Broker:</strong> Gerencia a comunicação assíncrona entre o Consumer e o Producer.</li>
-            <li><strong>\_\_main.py:</strong> Ponto de entrada para o firmware.</li>
+            <li><strong>__main__.py:</strong> Ponto de entrada para o firmware.</li>
          </ul>
       </li>
       <li><strong>IA (Inteligência Artificial):</strong> Módulo dedicado ao processamento inteligente.
@@ -183,43 +183,54 @@
    <pre>
 mimir/
 |-- _docs/
+| |-- ...
 |
-|-- config/
-|  |-- libs/
-|  |-- secrets/
+|-- backend/
+| |-- Dockerfile
+| |-- src/
+| |-- ...
 |
-|-- project/
-|  |-- backend/
-|  |   |-- Dockerfile
+|-- frontend/
+| |-- Dockerfile
+| |-- src/
+| |-- ...
 |
-|  |-- frontend/
-|  |   |-- Dockerfile
+|-- firmware/
+| |-- consumer/
+| | |-- Dockerfile
+| | |-- src/
+| | |-- ...
+| |
+| |-- producer/
+| | |-- Dockerfile
+| | |-- src/
+| | |-- ...
 |
-|  |-- firmware/
-|  |   |-- Dockerfile
-|  |   |-- _consumer
-|  |   |-- _producer
-|  |   |-- broker
-|  |   |-- __main.py
+|-- ai/
+| |-- Dockerfile
+| |-- data/
+| |-- preprocessing/
+| |-- products/
+| | |-- d_face/
+| | |-- d_obj/
+| | |-- r_action/
+| | |-- r_emotion/
+| | |-- r_face/
+| | |-- t_objects/
+| |-- ...
 |
-|  |-- ai/
-|  |   |-- Dockerfile
-|  |   |-- data
-|  |   |-- preprocessing
-|  |   |-- products/
-|  |   |------------ d_face
-|  |   |------------ d_obj
-|  |   |------------ r_action
-|  |   |------------ r_emotion
-|  |   |------------ r_face
-|  |   |------------ t_objects
+|-- setup/
+| |-- libs/
+| |-- secrets/
+| |-- config/
+| |-- ...
 |
-|  |-- libs/
-|  |   |-- helpers
-|  |   |-- project
-|
-|-- docker-compose.yml
+|-- __setup__.sh
 |-- .gitignore
+|-- docker-compose.yml
+|-- README.md
+
+
 </pre>
 
    <h3 id="infraestrutura-e-implantacao">Infraestrutura e Implantação</h3>
