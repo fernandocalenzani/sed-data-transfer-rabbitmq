@@ -3,7 +3,7 @@ import numpy as np
 import json
 import os
 from dotenv import load_dotenv
-import broker.rabbitmq as Broker
+import libs.broker.rabbitmq as Broker
 
 def send_producer(payload):
 
