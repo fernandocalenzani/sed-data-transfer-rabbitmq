@@ -1,8 +1,0 @@
-setup.py
-mimir_broker/__init__.py
-mimir_broker/rabbitmq.py
-mimir_broker.egg-info/PKG-INFO
-mimir_broker.egg-info/SOURCES.txt
-mimir_broker.egg-info/dependency_links.txt
-mimir_broker.egg-info/requires.txt
-mimir_broker.egg-info/top_level.txt

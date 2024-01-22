@@ -1,13 +1,17 @@
+import json
+import os
 import pickle
+
 import pika
+from dotenv import load_dotenv
 
 
 class RabbitMQ:
-    def __init__(self, _host, _port, _username, _pass) -> None:
-        self.__host = _host
-        self.__port = _port
-        self.__username = _username
-        self.__pass = _pass
+    def __init__(self, host, port, username, password) -> None:
+        self.__host = host
+        self.__port = port
+        self.__username = username
+        self.__pass = password
 
         self.__channel = self.__create_channel()
 

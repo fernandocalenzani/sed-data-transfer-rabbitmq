@@ -8,22 +8,38 @@ SRC_FOLDERS=(
   ./setup/secrets/.env
   ./setup/secrets/.env
   ./setup/secrets/.env
+  ./setup/secrets/.env
 
   ./setup/config
   ./setup/config
   ./setup/config
   ./setup/config
+  ./setup/config
+
+  ./setup/libs/firmware
+  ./setup/libs/firmware
+  ./setup/libs/backend
+  ./setup/libs/ai
+  ./setup/libs/frontend
 )
 
 DEST_FOLDERS=(
-  ./project/firmware/.env
-  ./project/ai/.env
+  ./project/firmware/consumer/.env
+  ./project/firmware/producer/.env
   ./project/backend/.env
+  ./project/ai/.env
 
-  ./project/firmware/config
-  ./project/ai/config
+  ./project/firmware/consumer/config
+  ./project/firmware/producer/config
   ./project/backend/config
+  ./project/ai/config
   ./project/frontend/config
+
+  ./project/firmware/consumer/libs
+  ./project/firmware/producer/libs
+  ./project/backend/libs
+  ./project/ai/libs
+  ./project/frontend/libs
 )
 
 remove_directories() {

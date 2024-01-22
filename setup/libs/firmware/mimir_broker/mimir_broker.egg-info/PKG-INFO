@@ -1,6 +1,0 @@
-Metadata-Version: 2.1
-Name: mimir-broker
-Version: 0.1.0
-Summary: Broker class using RabbitMQ
-Author: Arise Technology
-Author-email: projects@arisetechnology.combr
