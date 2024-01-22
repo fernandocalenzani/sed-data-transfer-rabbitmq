@@ -2,7 +2,7 @@ import socket
 import time
 
 
-def ping(host="localhost", port=5672, max_attempts=5, wait_time=60):
+def ping(host="localhost", port=5672, max_attempts=1000, wait_time=10):
     attempts = 0
 
     while attempts < max_attempts:

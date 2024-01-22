@@ -4,7 +4,7 @@ import random
 
 import cv2
 import libs.broker.rabbitmq as Broker
-import libs.utils.read_env as Reader
+import libs.utils.read_project_config as Reader
 
 
 def callback(ch, method, properties, payload):

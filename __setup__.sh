@@ -76,4 +76,4 @@ echo "[MIMIR] Pre-build concludes successfully"
 echo ""
 echo "[MIMIR] starting docker"
 
-docker-compose up --build
+#docker-compose up --build
