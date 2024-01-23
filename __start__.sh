@@ -34,18 +34,18 @@ SRC_FOLDERS=(
 DEST_FOLDERS=(
   ./project/firmware/consumer/.env
   ./project/firmware/producer/.env
-  ./project/backend/.env
+  ./project/backend/app/.env
   ./project/ai/.env
 
   ./project/firmware/consumer/config
   ./project/firmware/producer/config
-  ./project/backend/config
+  ./project/backend/app/src/config
   ./project/ai/config
   ./project/frontend/config
 
   ./project/firmware/consumer/packages
   ./project/firmware/producer/packages
-  ./project/backend/packages
+  ./project/backend/app/src/packages
   ./project/ai/packages
   ./project/frontend/packages
 )

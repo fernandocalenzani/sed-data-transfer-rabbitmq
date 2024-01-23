@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"incremental": true,
+		"esModuleInterop": true,
+		"strictPropertyInitialization": false,
+		"outDir": "dist",
+		"module": "CommonJS",
+		"lib": ["ESNext"],
+		"target": "ES2017",
+		"sourceMap": true,
+		"composite": false,
+		"declaration": false,
+		"skipLibCheck": true,
+		"types": ["node", "express"],
+		"resolveJsonModule": true
+	},
+	"compileOnSave": true,
+	"include": ["src/**/*"],
+	"exclude": ["node_modules"]
+}

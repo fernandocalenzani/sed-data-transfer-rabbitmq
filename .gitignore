@@ -8,3 +8,6 @@ secrets
 dist
 sdist
 packages/
+
+node_modules/
+dist/
