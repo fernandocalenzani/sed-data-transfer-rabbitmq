@@ -1,10 +1,6 @@
 import subprocess
 import time
 
-import pika
-from requests.exceptions import RequestException
-
-
 def check_availability_http(command, max_attempts=10, wait_time=10):
     attempts = 0
 
@@ -13,8 +9,10 @@ def check_availability_http(command, max_attempts=10, wait_time=10):
             f"[MIMIR] Attempt {attempts + 1}/{max_attempts} - Verifying host connection")
 
         try:
+            print(command)
             result = subprocess.run(
                 command, shell=True, check=True, capture_output=True, text=True)
+            print(result)
 
             http_status = None
             for line in result.stdout.split('\n'):
@@ -30,7 +28,7 @@ def check_availability_http(command, max_attempts=10, wait_time=10):
                 print(
                     f"[MIMIR] The command is not available.\nError: {result.stderr}\nWaiting {wait_time}s before next attempt")
 
-        except RequestException as e:
+        except Exception as e:
             print(
                 f"[MIMIR] The command is not available.\nError: {e}\nWaiting {wait_time}s before next attempt")
 
