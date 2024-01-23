@@ -14,6 +14,7 @@ export interface IClientSchema extends IMongoDefaults {
   birth?: Date;
   cpfCnpj: string;
   address?: IAddress;
+  devices?: string[];
   phoneNumber: string;
   token?: ITokenUpdateData;
   tokenUpdateLogin?: ITokenUpdateData;
