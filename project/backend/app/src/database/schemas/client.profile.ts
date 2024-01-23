@@ -12,7 +12,7 @@ const clientSchema = new Schema<IClientSchema>(
     address: { type: Object, required: false, default: null },
     phoneNumber: { type: String, required: false, default: null },
     birth: { type: Date, required: false, default: null },
-
+    devices: [{ type: String, required: false, default: null }],
     token: {
       type: Object,
       expires: generalConfig.expirations.tokens,
