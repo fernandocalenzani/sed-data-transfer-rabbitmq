@@ -11,16 +11,16 @@ services:
       - RABBITMQ_DEFAULT_PASS=admin
     tty: true
 
-  #firmware-consumer:
-    #build:
-    #  context: ./project/firmware/consumer
-    #ports:
-    #  - "4000:4000"
-    #image: "mimir/firmware-consumer:0.1.0"
-    #working_dir: /firmware-consumer
-    #depends_on:
-    #  - rabbitmq
-    #tty: true
+  firmware-consumer:
+    build:
+      context: ./project/firmware/consumer
+    ports:
+      - "4000:4000"
+    image: "mimir/firmware-consumer:0.1.0"
+    working_dir: /firmware-consumer
+    depends_on:
+      - rabbitmq
+    tty: true
 
   #firmware-producer:
   #  build:

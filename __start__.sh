@@ -43,11 +43,11 @@ DEST_FOLDERS=(
   ./project/ai/config
   ./project/frontend/config
 
-  ./project/firmware/consumer/libs
-  ./project/firmware/producer/libs
-  ./project/backend/libs
-  ./project/ai/libs
-  ./project/frontend/libs
+  ./project/firmware/consumer/packages
+  ./project/firmware/producer/packages
+  ./project/backend/packages
+  ./project/ai/packages
+  ./project/frontend/packages
 )
 
 remove_directories() {

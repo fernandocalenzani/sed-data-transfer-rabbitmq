@@ -1,8 +1,8 @@
 import os
 
 import _consumer as Consumer
-import libs.checker.check_host as Checker
-import libs.utils.read_project_config as Reader
+import packages.checker.check_host as Checker
+import packages.utils.read_project_config as Reader
 
 
 def main():

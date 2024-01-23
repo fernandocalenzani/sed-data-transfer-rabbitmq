@@ -3,8 +3,8 @@ import pickle
 import random
 
 import cv2
-import libs.broker.rabbitmq as Broker
-import libs.utils.read_project_config as Reader
+import packages.broker.rabbitmq as Broker
+import packages.utils.read_project_config as Reader
 
 
 def callback(ch, method, properties, payload):
