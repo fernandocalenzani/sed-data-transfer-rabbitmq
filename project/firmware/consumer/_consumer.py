@@ -33,6 +33,9 @@ def start_consumer():
     __username = os.getenv("RABBIT_PASSWORD")
     __pass = os.getenv("RABBIT_USERNAME")
 
+    # pegar do cadastro do cliente:
+    __device = os.getenv("DEVICE")
+
     rabbitmq = Broker.RabbitMQ(__host, __port, __username, __pass)
-    rabbitmq.build_broker("exchange_d_face", "queue_d_face", "")
+    rabbitmq.build_broker(f"exchange_{__device}", f"queue_{__device}", "")
     rabbitmq.start(callback, "queue_d_face")

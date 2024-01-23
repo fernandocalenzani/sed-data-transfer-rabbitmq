@@ -1,23 +1,23 @@
 {
   "hosts": {
     "HOST_APP_SERVER": {
-      "host":"172.21.0.1",
+      "host":"172.17.0.1",
       "port":5000
     },
     "HOST_RABBITMQ": {
-      "host":"172.21.0.1",
+      "host":"172.17.0.1",
       "port":5672
     },
     "HOST_RABBITMQ_CLI": {
-      "host":"172.21.0.1",
+      "host":"172.17.0.1",
       "port":15672
     },
     "HOST_CONSUMER": {
-      "host":"172.21.0.1",
+      "host":"172.17.0.1",
       "port":4000
     },
     "HOST_PRODUCER": {
-      "host":"172.21.0.1",
+      "host":"172.17.0.1",
       "port":3000
     }
   },

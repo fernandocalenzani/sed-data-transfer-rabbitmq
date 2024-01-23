@@ -1,12 +1,12 @@
 import os
 
 import cv2
+import numpy as np
 import packages.broker.rabbitmq as Broker
 import packages.utils.read_project_config as Reader
-import numpy as np
 
 
-def send_producer(payload):
+def send_producer(payload, __device):
     __data = Reader.read_host('project_config.json')
     __host = __data['hosts']["HOST_RABBITMQ"]["host"]
     __port = __data['hosts']["HOST_RABBITMQ"]["port"]
@@ -14,7 +14,7 @@ def send_producer(payload):
     __pass = os.getenv("RABBIT_USERNAME")
 
     rabbitmq = Broker.RabbitMQ(__host, __port, __username, __pass)
-    rabbitmq.publish_stream("exchange_d_face", payload, 2, "")
+    rabbitmq.publish_stream(f"exchange_{__device}", payload, 2, "")
 
 
 def start_producer():
@@ -27,7 +27,10 @@ def start_producer():
 
         ok, frame = cam.read()
 
-        send_producer(np.array(frame))
+        # pegar do cadastro do cliente:
+        __device = os.getenv("DEVICE")
+
+        send_producer(np.array(frame), __device)
 
         cv2.imshow("video", frame)
 
