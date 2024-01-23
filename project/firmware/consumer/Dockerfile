@@ -10,8 +10,11 @@ COPY requirements.txt /firmware-consumer/
 # Update and upgrade system packages
 RUN apt-get update && \
   apt-get upgrade -y && \
-  # Remove unnecessary caches to reduce image size
   rm -rf /var/lib/apt/lists/*
+
+# Installing curl packages
+RUN apt-get update && \
+  apt-get install -y curl
 
 # Upgrade pip to the latest version
 RUN python -m pip install --upgrade pip

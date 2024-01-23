@@ -3,4 +3,5 @@ pika
 pillow
 opencv-python
 numpy
-
+tqdm
+requests

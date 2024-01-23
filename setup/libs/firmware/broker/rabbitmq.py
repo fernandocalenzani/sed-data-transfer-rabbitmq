@@ -10,7 +10,7 @@ class RabbitMQ:
         self.__username = username
         self.__pass = password
 
-        self.__channel = self.__create_channel()
+        self.__connection, self.__channel = self.__create_channel()
 
     def __create_channel(self):
         connection_params = pika.ConnectionParameters(
@@ -20,9 +20,10 @@ class RabbitMQ:
                 username=self.__username, password=self.__pass)
         )
 
-        channel = pika.BlockingConnection(connection_params).channel()
+        connection = pika.BlockingConnection(connection_params)
+        channel = connection.channel()
 
-        return channel
+        return connection, channel
 
     def build_broker(self, exchange_name, queue_name, routing_key):
         self.__channel.exchange_declare(exchange=exchange_name,
@@ -63,3 +64,12 @@ class RabbitMQ:
 
         self.set_queue(queue, callback_message)
         self.__channel.start_consuming()
+
+    def connection(self):
+        return self.__connection, self.__channel
+
+    def close(self):
+        print(f"[MIMIR] Close connection")
+        print(f" ")
+
+        self.__connection.close()
