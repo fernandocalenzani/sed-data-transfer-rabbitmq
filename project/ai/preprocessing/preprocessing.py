@@ -3,11 +3,6 @@ import numpy as np
 import broker.rabbitmq as Broker
 
 
-def send_producer(payload):
-    rabbitmq = Broker.RabbitMQ()
-    rabbitmq.publish_stream("exchange_d_face", payload, 2, "")
-
-
 font = cv2.FONT_HERSHEY_COMPLEX_SMALL
 cam = cv2.VideoCapture(0)
 

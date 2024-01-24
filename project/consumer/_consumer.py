@@ -4,7 +4,7 @@ import random
 
 import cv2
 import packages.broker.rabbitmq as Broker
-import packages.utils.read_project_config as Reader
+import packages.utils.read_file as Reader
 
 
 def callback(ch, method, properties, payload):
@@ -26,7 +26,8 @@ def send_response_to_client(payload):
 
 
 def start_consumer():
-    __data = Reader.read_host('project_config.json')
+    __data = Reader.read_host(
+        f'{os.path.dirname(os.path.abspath(__file__))}/config/project_config.json')
 
     __host = __data['hosts']["HOST_RABBITMQ"]["host"]
     __port = __data['hosts']["HOST_RABBITMQ"]["port"]
@@ -38,4 +39,4 @@ def start_consumer():
 
     rabbitmq = Broker.RabbitMQ(__host, __port, __username, __pass)
     rabbitmq.build_broker(f"exchange_{__device}", f"queue_{__device}", "")
-    rabbitmq.start(callback, "queue_d_face")
+    rabbitmq.start(callback, f"queue_{__device}")

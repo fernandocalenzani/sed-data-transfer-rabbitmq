@@ -2,19 +2,24 @@ import os
 
 import _producer as Producer
 import packages.checker.check_host as Checker
-import packages.utils.read_project_config as Reader
+import packages.utils.read_file as Reader
 
 
-def main():
-    Producer.start_producer()
+def main(url):
+    Producer.start_producer(url)
 
 
 if __name__ == "__main__":
     print("[MIMIR] --PRODUCER--")
 
-    __data = Reader.read_host('project_config.json')
+    __data = Reader.read_host(
+        f'{os.path.dirname(os.path.abspath(__file__))}/config/project_config.json')
+
     __host = __data['hosts']["HOST_RABBITMQ_CLI"]["host"]
     __port = __data['hosts']["HOST_RABBITMQ_CLI"]["port"]
+
+    __url = 0  # f"http://127.0.0.1:8080"
+
     __attempts = __data['settings']["attempt_recovery"]
     __timeout = __data['settings']["timeout_in_sec"]
     __username = os.getenv("RABBIT_PASSWORD")
@@ -25,7 +30,7 @@ if __name__ == "__main__":
 
     if Checker.check_availability_http(command, __attempts, __timeout):
         print("[MIMIR] Starting producer")
-        main()
+        main(__url)
 
     else:
         print("[MIMIR] host not found, ending producer")

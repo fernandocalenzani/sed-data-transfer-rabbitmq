@@ -76,4 +76,42 @@ echo "[MIMIR] Pre-build concludes successfully"
 echo ""
 echo "[MIMIR] starting docker"
 
-docker-compose up --build
+#!/bin/bash
+
+# Defina as variáveis padrão
+REMOVE_VOLUMES=false
+REMOVE_CONTAINERS=false
+
+# Processa as opções de linha de comando
+while getopts ":rmv" opt; do
+  case $opt in
+    r)
+      REMOVE_VOLUMES=true
+      REMOVE_CONTAINERS=true
+      ;;
+    m)
+      REMOVE_VOLUMES=true
+      ;;
+    v)
+      REMOVE_VOLUMES=true
+      ;;
+    \?)
+      echo "Opção inválida: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+# Verifica as opções fornecidas e executa os comandos correspondentes
+if [ "$REMOVE_VOLUMES" = true ]; then
+  echo "[MIMIR] removing volumes"
+  docker volume prune --force
+fi
+
+if [ "$REMOVE_CONTAINERS" = true ]; then
+  echo "[MIMIR] removing containers"
+  docker-compose down -v --rmi all
+fi
+
+# Inicia os contêineres após remover, se necessário
+docker-compose up --build -d --quiet-pull

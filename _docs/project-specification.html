@@ -116,7 +116,7 @@
 
    <h3>Resumo do Projeto</h3>
    <p align="left"><strong>Description:</strong> O projeto Mimir é uma solução abrangente que inclui componentes de
-      backend, frontend, firmware, inteligência artificial
+      backend, frontend, consumer, producer, inteligência artificial
       (IA), e bibliotecas de suporte. A estrutura é organizada em diferentes módulos para melhor modularidade e
       gerenciamento.</p>
 
@@ -152,14 +152,14 @@
    <h3 id="componentes-principais">Componentes Principais</h3>
 
    <ol>
-      <li><strong>Backend:</strong> Lida com a lógica de negócios e interage com o frontend e firmware.</li>
+      <li><strong>Backend:</strong> Lida com a lógica de negócios e interage com o frontend, consumer e producer.</li>
       <li><strong>Frontend:</strong> Interface do usuário que interage com o backend.</li>
-      <li><strong>Firmware:</strong> Responsável pela comunicação entre o hardware e o backend.
+      <li><strong>Consumer/Producer:</strong> Responsável pela comunicação entre o hardware e o backend.
          <ul>
             <li><strong>Consumer:</strong> Recebe dados do RabbitMQ e realiza pré-processamento.</li>
             <li><strong>Producer:</strong> Envia dados para o RabbitMQ.</li>
             <li><strong>Broker:</strong> Gerencia a comunicação assíncrona entre o Consumer e o Producer.</li>
-            <li><strong>__main__.py:</strong> Ponto de entrada para o firmware.</li>
+            <li><strong>__main__.py:</strong> Ponto de entrada para o Consumer/Producer.</li>
          </ul>
       </li>
       <li><strong>IA (Inteligência Artificial):</strong> Módulo dedicado ao processamento inteligente.
@@ -195,13 +195,12 @@ mimir/
 | |-- src/
 | |-- ...
 |
-|-- firmware/
-| |-- consumer/
+|-- consumer/
 | | |-- Dockerfile
 | | |-- src/
 | | |-- ...
 | |
-| |-- producer/
+|-- producer/
 | | |-- Dockerfile
 | | |-- src/
 | | |-- ...
@@ -277,14 +276,14 @@ mimir/
             <td>Configurações específicas do hosting</td>
          </tr>
          <tr>
-            <td>Firmware (Consumer)</td>
+            <td>Consumer</td>
             <td>1</td>
             <td>Firebase Functions</td>
             <td>1 vCPU, 2 GB de RAM</td>
             <td>Configuração específica para RabbitMQ</td>
          </tr>
          <tr>
-            <td>Firmware (Producer)</td>
+            <td>Producer</td>
             <td>1</td>
             <td>Firebase Functions</td>
             <td>1 vCPU, 2 GB de RAM</td>
