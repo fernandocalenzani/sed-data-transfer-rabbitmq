@@ -18,7 +18,7 @@ if __name__ == "__main__":
     __host = __data['hosts']["HOST_RABBITMQ_CLI"]["host"]
     __port = __data['hosts']["HOST_RABBITMQ_CLI"]["port"]
 
-    __url = 0  # f"http://127.0.0.1:8080"
+    __url = f"http://127.0.0.1:8080"
 
     __attempts = __data['settings']["attempt_recovery"]
     __timeout = __data['settings']["timeout_in_sec"]

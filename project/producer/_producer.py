@@ -1,8 +1,10 @@
 import os
+import time
 
 import cv2
 import numpy as np
 import packages.broker.rabbitmq as Broker
+import packages.utils.progress_bar as progress_bar
 import packages.utils.read_file as Reader
 
 
@@ -27,10 +29,15 @@ def start_producer(__url):
     while True:
         ok, frame = cam.read()
 
-        print(cam)
+        print(frame)
 
         if not ok:
-            print(ok)
+            print(
+                f"[MIMIR] Could not read the camera data, finishing the session...")
+
+            progress_bar.simulate_work(50, 0.1)
+
+            print("\n\n[MIMIR] Finished Producer")
             break
 
         else:

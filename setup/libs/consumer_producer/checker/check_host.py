@@ -1,12 +1,13 @@
 import subprocess
 import time
 
+
 def check_availability_http(command, max_attempts=10, wait_time=10):
     attempts = 0
 
     while attempts < max_attempts:
         print(
-            f"[MIMIR] Attempt {attempts + 1}/{max_attempts} - Verifying host connection")
+            f"[MIMIR] Attempt {attempts + 1}/{max_attempts} - Verifying host connection", end='\r')
 
         try:
             result = subprocess.run(
@@ -24,11 +25,11 @@ def check_availability_http(command, max_attempts=10, wait_time=10):
                 return True
             else:
                 print(
-                    f"[MIMIR] The command is not available.\nWaiting {wait_time}s before next attempt")
+                    f"[MIMIR] [{attempts}] The command is not available.\nWaiting {wait_time}s before next attempt")
 
         except Exception as e:
             print(
-                f"[MIMIR] The command is not available.\nWaiting {wait_time}s before next attempt")
+                f"[MIMIR] [{attempts}] The command is not available.\nWaiting {wait_time}s before next attempt")
 
         time.sleep(wait_time)
         attempts += 1
