@@ -1,10 +1,8 @@
 import os
-import time
 
 import cv2
 import numpy as np
 import packages.broker.rabbitmq as Broker
-import packages.utils.progress_bar as progress_bar
 import packages.utils.read_file as Reader
 
 
@@ -23,24 +21,17 @@ def send_producer(payload, __device):
 
 
 def start_producer(__url):
-
     cam = cv2.VideoCapture(__url)
+    __device = os.getenv("DEVICE")
 
     while True:
         ok, frame = cam.read()
 
-        print(frame)
-
-        if not ok:
-            print(
-                f"[MIMIR] Could not read the camera data, finishing the session...")
-
-            progress_bar.simulate_work(50, 0.1)
-
-            print("\n\n[MIMIR] Finished Producer")
-            break
-
-        else:
-            # pegar do cadastro do cliente:
-            __device = os.getenv("DEVICE")
+        if ok:
             send_producer(np.array(frame), __device)
+        else:
+            cam.release()
+            cam = cv2.VideoCapture(__url)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break

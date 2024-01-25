@@ -1,22 +1,31 @@
-#________________________________________________________________
-# DOCKERFILE
+# ---|DOCKERFILE|---
 
-#________________________________________________________________
-# BUILDER
-#________________________________________________________________
+#................................................................
+# ---|BUILDER|---
+#................................................................
 FROM python:3.10 AS builder
 
 WORKDIR /mimir/
 
+#................................................................
+# ---|ENV|---
+#................................................................
+ENV RABBIT_USERNAME="admin"
+ENV RABBIT_PASSWORD="admin"
+ENV MONGO_HOST = "mongodb+srv://admin:TTH2kszKqxF0AHpu@arise-lab.tcfidx2.mongodb.net/db-mimir?retryWrites=true&w=majority"
+ENV MONGO_DB = "db-mimir"
+ENV DEVICE = "mimir"
+
+#................................................................
+# ---|INSTALLATION|---
+#................................................................
 COPY project/consumer/requirements.txt ./consumer/
 COPY project/producer/requirements.txt ./producer/
 COPY project/ai/requirements.txt ./ai/
 
-# Install dependencies
 RUN apt-get update && \
   apt-get install -y curl
 
-# Upgrade pip to the latest version
 RUN python -m pip install --upgrade pip
 
 RUN apt-get update && \
@@ -30,29 +39,28 @@ RUN pip install --no-cache-dir -r ./consumer/requirements.txt && \
   pip install --no-cache-dir -r ./producer/requirements.txt && \
   pip install --no-cache-dir -r ./ai/requirements.txt
 
-# env
-COPY setup/secrets/.env ./consumer/
-COPY setup/secrets/.env ./producer/
-COPY setup/secrets/.env ./ai/
 
-# Dependencies
+#................................................................
+# ---|DEPENDENCIES|---
+#................................................................
 COPY setup/config ./consumer/config
 COPY setup/config ./producer/config
 COPY setup/config ./ai/config
 
-# Dependencies
 COPY setup/libs/consumer_producer ./consumer/packages
 COPY setup/libs/consumer_producer ./producer/packages
 COPY setup/libs/ai ./ai/packages
 
-# Copy the entire project
+#................................................................
+# ---|OTHERS FILES|---
+#................................................................
 COPY project/consumer ./consumer/
 COPY project/producer ./producer/
 COPY project/ai ./ai/
 
-#________________________________________________________________
-# CMD
-#________________________________________________________________
+#................................................................
+# ---|CMD|---
+#................................................................
 FROM builder
 
 WORKDIR /mimir

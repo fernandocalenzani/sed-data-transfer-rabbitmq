@@ -18,8 +18,6 @@ if __name__ == "__main__":
     __host = __data['hosts']["HOST_RABBITMQ_CLI"]["host"]
     __port = __data['hosts']["HOST_RABBITMQ_CLI"]["port"]
 
-    __url = f"http://127.0.0.1:8080"
-
     __attempts = __data['settings']["attempt_recovery"]
     __timeout = __data['settings']["timeout_in_sec"]
     __username = os.getenv("RABBIT_PASSWORD")
@@ -30,7 +28,8 @@ if __name__ == "__main__":
 
     if Checker.check_availability_http(command, __attempts, __timeout):
         print("[MIMIR] Starting producer")
-        main(__url)
+
+        main("rtsp://172.20.0.1:8554/video_stream")
 
     else:
         print("[MIMIR] host not found, ending producer")

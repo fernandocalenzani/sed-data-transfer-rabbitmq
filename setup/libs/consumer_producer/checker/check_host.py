@@ -1,13 +1,15 @@
 import subprocess
 import time
 
+import cv2
+
 
 def check_availability_http(command, max_attempts=10, wait_time=10):
     attempts = 0
 
     while attempts < max_attempts:
         print(
-            f"[MIMIR] Attempt {attempts + 1}/{max_attempts} - Verifying host connection", end='\r')
+            f"[MIMIR] Attempt {attempts + 1}/{max_attempts} - Verifying host connection\n", end='\r')
 
         try:
             result = subprocess.run(
@@ -21,7 +23,7 @@ def check_availability_http(command, max_attempts=10, wait_time=10):
 
             if http_status == '200':
                 print(
-                    f"[MIMIR] Connected Successfully")
+                    f"[MIMIR] Connected Successfully\n")
                 return True
             else:
                 print(
@@ -36,3 +38,15 @@ def check_availability_http(command, max_attempts=10, wait_time=10):
 
     print(f"[MIMIR] host not found, ending")
     return False
+
+
+def check_availability_rtsp(url):
+    try:
+        cap = cv2.VideoCapture(url)
+
+        if cap.isOpened():
+            return True, cap
+        else:
+            return False, cap
+    except Exception as e:
+        return False, cap

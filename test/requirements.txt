@@ -1,8 +1,0 @@
-opencv-python
-aiohttp
-aiortc
-argparse
-asyncio
-logging
-platform
-ssl
