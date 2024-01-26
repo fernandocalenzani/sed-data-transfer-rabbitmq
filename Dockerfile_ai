@@ -1,0 +1,45 @@
+# ---|DOCKERFILE|---
+
+#................................................................
+# ---|BUILDER|---
+#................................................................
+FROM python:3.10
+
+WORKDIR /ai
+
+#................................................................
+# ---|INSTALLATION|---
+#................................................................
+COPY project/ai/requirements.txt ./ai/
+
+RUN apt-get update && \
+  apt-get install -y curl
+
+RUN python -m pip install --upgrade pip
+
+RUN apt-get update && \
+  apt-get upgrade -y && \
+  rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && \
+  apt-get install -y libgl1-mesa-glx
+
+RUN pip install --no-cache-dir -r ./ai/requirements.txt
+
+#................................................................
+# ---|DEPENDENCIES|---
+#................................................................
+COPY setup/config ./consumer/config
+
+COPY setup/libs/ai ./ai/packages
+
+#................................................................
+# ---|OTHERS FILES|---
+#................................................................
+COPY project/ai ./ai/
+
+#________________________________________________________________
+# CMD
+#________________________________________________________________
+
+CMD ["python", "ai/__main__.py"]

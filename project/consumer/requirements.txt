@@ -3,5 +3,7 @@ pika
 pillow
 opencv-python
 numpy
-tqdm
-requests
+datetime
+logging
+
+memory-profiler

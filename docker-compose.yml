@@ -11,9 +11,32 @@ services:
       - RABBITMQ_DEFAULT_PASS=admin
     tty: true
 
-  mimir:
+  consumer:
     build:
       context: .
+      dockerfile: Dockerfile_consumer
     depends_on:
       - rabbitmq
+    env_file:
+      - setup/secrets/.env
+    tty: true
+
+  producer:
+    build:
+      context: .
+      dockerfile: Dockerfile_producer
+    depends_on:
+      - consumer
+    env_file:
+      - setup/secrets/.env
+    tty: true
+
+  ai:
+    build:
+      context: .
+      dockerfile: Dockerfile_ai
+    depends_on:
+      - consumer
+    env_file:
+      - setup/secrets/.env
     tty: true

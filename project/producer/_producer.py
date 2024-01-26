@@ -1,4 +1,6 @@
 import os
+import sys
+import time
 
 import cv2
 import numpy as np
@@ -22,16 +24,25 @@ def send_producer(payload, __device):
 
 def start_producer(__url):
     cam = cv2.VideoCapture(__url)
+
     __device = os.getenv("DEVICE")
 
     while True:
-        ok, frame = cam.read()
+        try:
+            ok, frame = cam.read()
 
-        if ok:
-            send_producer(np.array(frame), __device)
-        else:
-            cam.release()
-            cam = cv2.VideoCapture(__url)
+            if ok:
+                send_producer(np.array(frame), __device)
+            else:
+                cam.release()
+                cv2.destroyAllWindows()
+                time.sleep(5)
+                cam = cv2.VideoCapture(__url)
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        except cv2.error as e:
+            sys.stdout = open(os.devnull, 'w')
+            print(f"Erro OpenCV: {e}")
+            sys.stdout = sys.__stdout__

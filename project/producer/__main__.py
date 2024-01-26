@@ -29,7 +29,7 @@ if __name__ == "__main__":
     if Checker.check_availability_http(command, __attempts, __timeout):
         print("[MIMIR] Starting producer")
 
-        main("rtsp://172.20.0.1:8554/video_stream")
+        main("rtsp://172.17.0.1:8554/video_stream")
 
     else:
         print("[MIMIR] host not found, ending producer")
