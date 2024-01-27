@@ -1,9 +1,0 @@
-python-dotenv
-pika
-pillow
-opencv-python
-numpy
-datetime
-logging
-
-memory-profiler

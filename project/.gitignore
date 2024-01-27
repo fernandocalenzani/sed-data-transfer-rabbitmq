@@ -1,0 +1,11 @@
+data/
+.venv
+__pycache__/
+*.hdf5
+lbph_classifier_II.yml
+dist
+sdist
+packages/
+
+node_modules/
+dist/

@@ -1,0 +1,9 @@
+python-dotenv
+pika
+pillow
+opencv-python
+numpy
+datetime
+tqdm
+psutil
+matplotlib
