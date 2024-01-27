@@ -7,3 +7,4 @@ datetime
 tqdm
 psutil
 matplotlib
+tabulate
