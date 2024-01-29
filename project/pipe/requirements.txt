@@ -8,3 +8,5 @@ tqdm
 psutil
 matplotlib
 tabulate
+requests
+asyncio

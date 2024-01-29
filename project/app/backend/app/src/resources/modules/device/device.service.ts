@@ -1,25 +1,31 @@
-import bcrypt from "bcrypt";
 import { Request, Response } from "express";
-import { clientProfileRepository } from "../../../database/repositories/_index";
-import { IClientSchema, IUserAuth } from "../../../packages/app_types/_index";
+import {
+  clientDeviceRepository,
+  clientProfileRepository,
+} from "../../../database/repositories/_index";
+import { IDeviceSchema, IUserAuth } from "../../../packages/app_types/_index";
 
 export class Service {
   public async create(
     req: Request,
     res: Response,
-    payload: IClientSchema
+    payload: IDeviceSchema
   ): Promise<object> {
     try {
-      const user = await clientProfileRepository.createOne({
-        ...payload,
-        token: {
-          token: "encrypted",
-          date: new Date(),
-        },
-        password: bcrypt.hashSync(payload.password, 10),
+      const user = await clientProfileRepository.find({
+        _id: payload.client,
       });
 
-      return res.status(201).json(user);
+      if (user.length <= 0) {
+        return res.status(404).json({ message: "Client not found" });
+      }
+
+      const data = await clientDeviceRepository.createOne({
+        ...payload,
+        info: `[${new Date()}] Device created`,
+      });
+
+      return res.status(201).json(data);
     } catch (err: any) {
       console.error(err);
       return res.status(500).json({ message: "Server error: " + err.message });
@@ -29,14 +35,24 @@ export class Service {
   public async update(
     req: Request,
     res: Response,
-    payload: IClientSchema,
-    userJwt: IUserAuth,
-    _id: string
+    payload: IDeviceSchema,
+    userJwt: IUserAuth
   ): Promise<object> {
     try {
-      const user = await clientProfileRepository.updateOne(_id, payload);
+      const device = await clientDeviceRepository.find({
+        _id: payload._id,
+      });
 
-      return res.status(201).json(user);
+      if (device.length <= 0) {
+        return res.status(404).json({ message: "Device not found" });
+      }
+
+      const data = await clientDeviceRepository.updateOne(payload._id, {
+        ...payload,
+        $push: { info: `[${new Date()}] Device updated - ${payload.info}` },
+      });
+
+      return res.status(201).json(data);
     } catch (err: any) {
       console.error(err);
       return res.status(500).json({ message: "Server error: " + err.message });
@@ -50,16 +66,20 @@ export class Service {
     _id: string
   ): Promise<object> {
     try {
-      await clientProfileRepository.deleteOne(_id, {
+      const device = await clientDeviceRepository.find({
+        _id: _id,
+      });
+
+      if (device.length <= 0) {
+        return res.status(404).json({ message: "Device not found" });
+      }
+
+      await clientDeviceRepository.deleteOne(_id, {
         name: "Deleted Profile",
-        email: "",
-        password: "",
-        token: "",
-        permissions: [""],
       });
 
       return res.status(200).json({
-        message: "Usuário deletado com sucesso",
+        message: "Dispositivo deletado com sucesso",
       });
     } catch (err: any) {
       console.error(err);
@@ -74,7 +94,7 @@ export class Service {
     _id: string
   ): Promise<object> {
     try {
-      const result = await clientProfileRepository.find({
+      const result = await clientDeviceRepository.find({
         _id: _id,
       });
 
@@ -87,7 +107,10 @@ export class Service {
 
   public async readAll(req: Request, res: Response): Promise<object> {
     try {
-      const result = await clientProfileRepository.find({});
+      const result = await clientDeviceRepository.find({
+        status: true,
+      });
+
       return res.status(200).json(result);
     } catch (err: any) {
       console.error(err);

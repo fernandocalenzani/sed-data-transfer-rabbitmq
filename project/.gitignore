@@ -5,7 +5,6 @@ __pycache__/
 lbph_classifier_II.yml
 dist
 sdist
-packages/
 
 node_modules/
 dist/

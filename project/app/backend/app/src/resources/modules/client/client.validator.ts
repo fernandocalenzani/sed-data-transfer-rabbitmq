@@ -27,7 +27,6 @@ const updateUserSchema = z.object({
   ),
   cpfCnpj: z.string(),
   birth: z.string(),
-  devices: z.array(z.string()),
   address: z.object({
     street: z.string(),
     number: z.number(),

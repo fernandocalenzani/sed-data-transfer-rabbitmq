@@ -1,20 +1,22 @@
 import { Request, Response, Router } from "express";
 import { IUserAuth } from "../../../packages/app_types/_index";
-import { IClientSchema } from "../../../packages/app_types/schemas/_index";
+import {
+  IClientSchema,
+  IDeviceSchema,
+} from "../../../packages/app_types/schemas/_index";
 import { authApi, authClient } from "../../middleware/_index";
-import ClientService from "./client.service";
-import * as Validator from "./client.validator";
+import Service from "./device.service";
+import * as Validator from "./device.validator";
 
 const routes = Router();
 
 routes.post(
   "/create",
-  Validator.createClientValidator,
+  Validator.createValidator,
   async (req: Request, res: Response) => {
     return new Promise(async (resolve) => {
-      const payload = req.body as unknown as IClientSchema;
-
-      return await ClientService.create(req, res, payload);
+      const payload = req.body as unknown as IDeviceSchema;
+      return await Service.create(req, res, payload);
     });
   }
 );
@@ -22,10 +24,10 @@ routes.post(
 routes.put(
   "/edit",
   authClient,
-  Validator.updateClientValidator,
+  Validator.updateValidator,
   async (req: Request, res: Response) => {
     return new Promise(async (resolve) => {
-      const payload = req.body as unknown as IClientSchema;
+      const payload = req.body as unknown as IDeviceSchema;
       const _id = req.query._id as string;
       const userAuth: IUserAuth = {
         _id: "",
@@ -33,7 +35,7 @@ routes.put(
         name: "",
       };
 
-      return await ClientService.update(req, res, payload, userAuth, _id);
+      return await Service.update(req, res, payload, userAuth);
     });
   }
 );
@@ -48,7 +50,7 @@ routes.delete("/delete", authClient, async (req: Request, res: Response) => {
       name: "",
     };
 
-    return await ClientService.delete(req, res, userAuth, _id);
+    return await Service.delete(req, res, userAuth, _id);
   });
 });
 
@@ -62,13 +64,13 @@ routes.get("/read-by-id", authClient, async (req: Request, res: Response) => {
       name: "",
     };
 
-    return await ClientService.readById(req, res, userAuth, _id);
+    return await Service.readById(req, res, userAuth, _id);
   });
 });
 
 routes.get("/read-all", authApi, async (req: Request, res: Response) => {
   return new Promise(async (resolve) => {
-    return await ClientService.readAll(req, res);
+    return await Service.readAll(req, res);
   });
 });
 

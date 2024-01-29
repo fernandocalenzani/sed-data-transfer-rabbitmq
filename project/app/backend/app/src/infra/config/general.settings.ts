@@ -4,6 +4,7 @@ export const generalConfig = {
     refreshJwt: "15min",
     tokens: 1 * 60 * 1000,
     standBySender: 5 * 60 * 1000,
+    apikey: 300,
   },
   pagination: {
     size: "10",
@@ -19,3 +20,5 @@ export const generalConfig = {
     port: process.env.BACKEND_PORT,
   },
 };
+
+

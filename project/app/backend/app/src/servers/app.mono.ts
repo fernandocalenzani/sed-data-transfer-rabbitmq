@@ -11,7 +11,7 @@ import { corsOptions, limitRequest } from "../infra/config/_index";
 import * as routes from "../resources/routes/_index";
 
 const apiGroups = {
-  apiG1: [routes.readsApi],
+  apiG1: [routes.clientApi, routes.deviceApi],
 };
 
 async function setupFunction(routers: express.Router[]) {
@@ -29,14 +29,11 @@ async function setupFunction(routers: express.Router[]) {
     instance.use(router);
   });
 
-  instance.listen(
-    `${generalConfig.generalConfig.projectConfig.host}:${generalConfig.generalConfig.projectConfig.port}`,
-    () => {
-      console.log(
-        "listening env: " + generalConfig.generalConfig.projectConfig.port
-      );
-    }
-  );
+  instance.listen(`${generalConfig.generalConfig.projectConfig.port}`, () => {
+    console.log(
+      "listening env: " + generalConfig.generalConfig.projectConfig.port
+    );
+  });
 }
 
 setupFunction(apiGroups.apiG1);
