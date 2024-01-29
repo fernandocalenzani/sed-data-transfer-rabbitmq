@@ -1,26 +1,25 @@
 import time
-from datetime import datetime
 
 import consumer.consumer as Consumer
 import libs.checker.check_host as Checker
+from libs.utils.logger import CustomLogger
 
 
 def start(params):
-    print("[MIMIR] --NEW CONSUMER--")
-    print(f"[MIMIR | Consumer] ip: {params['client']['ip']}")
-    print(f"[MIMIR | Consumer] ip: {params['client']['name']}")
-    print(f"[MIMIR | Consumer] ip: {datetime.now()}")
+    log = CustomLogger(params['client']['sn'], 'mimir@consumer')
+
+    log.info(f"Creating new consumer")
+    log.info(f"ip: {params['client']['ip']}")
+    log.info(f"name: {params['client']['name']}")
 
     command = f"curl -i -u {params['rabbitmq']['username']}:{params['rabbitmq']['password']} http://{params['rabbitmq']['host_cli']}:{params['rabbitmq']['port_cli']}/api/vhosts"
 
-    print("[MIMIR | Consumer] checking dependencies...", end='\r')
+    log.info(f"checking dependencies..")
 
     if Checker.check_availability_http(command, 10, 15):
-        print("[MIMIR | Consumer] Starting...")
-
+        log.info(f"starting...")
         time.sleep(2)
-
         Consumer.start_consumer(params)
 
     else:
-        print("[MIMIR | Consumer] broker not found, ending consumer")
+        log.error(f"broker not found, ending consumer")

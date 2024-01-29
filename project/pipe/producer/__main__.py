@@ -1,22 +1,23 @@
 import time
-from datetime import datetime
 
 import libs.checker.check_host as Checker
 import producer.producer as Producer
+from libs.utils.logger import CustomLogger
 
 
 def start(params):
-    print(f"[MIMIR | Producer] --NEW PRODUCER--")
-    print(f"[MIMIR | Producer] ip: {params['client']['ip']}")
-    print(f"[MIMIR | Producer] ip: {params['client']['name']}")
-    print(f"[MIMIR | Producer] ip: {datetime.now()}")
+    log = CustomLogger(params['client']['sn'], 'mimir@producer')
+
+    log.info(f"Creating new producer")
+    log.info(f"ip: {params['client']['ip']}")
+    log.info(f"name: {params['client']['name']}")
 
     command = f"curl -i -u {params['rabbitmq']['username']}:{params['rabbitmq']['password']} http://{params['rabbitmq']['host_cli']}:{params['rabbitmq']['port_cli']}/api/vhosts"
 
-    print("[MIMIR | Producer] checking dependencies...")
+    log.info(f"checking dependencies..")
 
     if Checker.check_availability_http(command, 10, 15):
-        print("\n\n[MIMIR | Producer] Starting produce service")
+        log.info(f"startging...")
 
         time.sleep(2)
 
@@ -25,4 +26,4 @@ def start(params):
         Producer.start_producer(params)
 
     else:
-        print("[MIMIR | Producer] host not found, ending producer")
+        log.info(f"broker not found, ending consumer")

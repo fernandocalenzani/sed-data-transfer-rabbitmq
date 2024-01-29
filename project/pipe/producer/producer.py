@@ -4,20 +4,30 @@ import time
 
 import cv2
 import libs.broker.rabbitmq as Broker
+from libs.utils.logger import CustomLogger
 
 
 def publish(params, frame):
-    rabbitmq = Broker.RabbitMQ(
-        params['rabbitmq']['host'],
-        params['rabbitmq']['port'],
-        params['rabbitmq']['username'],
-        params['rabbitmq']['password']
-    )
+    try:
+        rabbitmq = Broker.RabbitMQ(
+            params['rabbitmq']['host'],
+            params['rabbitmq']['port'],
+            params['rabbitmq']['username'],
+            params['rabbitmq']['password']
+        )
 
-    rabbitmq.publish_stream(f"exchange_{params['client']['sn']}", frame, 2, "")
+        rabbitmq.publish_stream(
+            f"exchange_{params['client']['sn']}", frame, 2, "")
+
+    except Exception as e:
+        log = CustomLogger(params['client']['sn'], 'mimir@producer')
+        log.error(f"error to try to publish data to exchange: {e}")
 
 
 def start_producer(params):
+    log = CustomLogger(params['client']['sn'], 'mimir@producer')
+    log.warn(f"Starting capture camera\n")
+
     cam = cv2.VideoCapture(params['client']['url'])
 
     while True:

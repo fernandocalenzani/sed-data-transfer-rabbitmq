@@ -2,14 +2,16 @@ import subprocess
 import time
 
 import cv2
+from libs.utils.logger import CustomLogger
 
 
-def check_availability_http(command, max_attempts=10, wait_time=10):
+def check_availability_http(command, sn, service, max_attempts=10, wait_time=10):
     attempts = 0
+    log = CustomLogger(sn, service)
 
     while attempts < max_attempts:
-        print(
-            f"[MIMIR] Attempt {attempts + 1}/{max_attempts} - Verifying host connection\n", end='\r')
+        log.info(
+            f"Attempt {attempts + 1}/{max_attempts} - Verifying host connection\n")
 
         try:
             result = subprocess.run(
@@ -22,21 +24,21 @@ def check_availability_http(command, max_attempts=10, wait_time=10):
                     break
 
             if http_status == '200':
-                print(
-                    f"[MIMIR] Connected Successfully\n")
+                log.info(
+                    f"Connected Successfully\n")
                 return True
             else:
-                print(
-                    f"[MIMIR] [{attempts}] The command is not available.\nWaiting {wait_time}s before next attempt")
+                log.info(
+                    f"[{attempts}] The command is not available.\nWaiting {wait_time}s before next attempt")
 
         except Exception as e:
-            print(
-                f"[MIMIR] [{attempts}] The command is not available.\nWaiting {wait_time}s before next attempt")
+            log.info(
+                f"[{attempts}] The command is not available.\nWaiting {wait_time}s before next attempt")
 
         time.sleep(wait_time)
         attempts += 1
 
-    print(f"[MIMIR] host not found, ending")
+        log.info(f"host not found, ending")
     return False
 
 

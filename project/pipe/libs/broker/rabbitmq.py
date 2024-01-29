@@ -60,9 +60,6 @@ class RabbitMQ:
         return pickle.loads(frame_bytes)
 
     def start(self, callback, queue):
-        print(f"[MIMIR] Listening on RabbitMQ channel")
-        print(f" ")
-
         self.set_queue(queue, callback)
         self.__channel.start_consuming()
 
@@ -70,7 +67,4 @@ class RabbitMQ:
         return self.__connection, self.__channel
 
     def close(self):
-        print(f"[MIMIR] Close connection")
-        print(f" ")
-
         self.__connection.close()

@@ -6,7 +6,6 @@ numpy
 datetime
 tqdm
 psutil
-matplotlib
 tabulate
 requests
-asyncio
+logging

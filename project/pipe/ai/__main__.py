@@ -3,6 +3,7 @@ import os
 import _consumer as Consumer
 import packages.checker.check_host as Checker
 import packages.utils.read_file as Reader
+from libs.utils.logger import CustomLogger
 
 
 def main():
@@ -10,7 +11,9 @@ def main():
 
 
 if __name__ == "__main__":
-    print("[MIMIR] --AI--")
+    log = CustomLogger(params['client']['sn'], 'mimir@ai')
+
+    log.warn(f"AI Service")
 
     __data = Reader.read_host(
         f'{os.path.dirname(os.path.abspath(__file__))}/config/project_config.json')
@@ -23,10 +26,10 @@ if __name__ == "__main__":
     __pass = os.getenv("RABBIT_USERNAME")
     command = f"curl -i -u {__username}:{__pass} http://{__host}:{__port}/api/vhosts"
 
-    print("[MIMIR] checking dependencies...")
+    log.info(f" checking dependencies...")
 
     if Checker.check_availability_http(command, __attempts, __timeout):
-        print("[MIMIR] Starting consumer")
+        log.info(f"Starting AI service")
         main()
     else:
-        print("[MIMIR] broker not found, ending consumer")
+        log.error(f"broker not found, ending consumer")
