@@ -33,6 +33,8 @@ class CustomLogger:
         self.logger.critical(message)
 
     def table(self, data, headers):
+        print('- - - | ADMIN | - - -')
         formatted_data = [[f"[{self.logger.name}]", *row] for row in data]
         table = tabulate(formatted_data, headers, tablefmt="fancy_grid")
         self.logger.info(f"\n{table}")
+        print('\n')

@@ -25,9 +25,6 @@ def publish(params, frame):
 
 
 def start_producer(params):
-    log = CustomLogger(params['client']['sn'], 'mimir@producer')
-    log.warn(f"Starting capture camera\n")
-
     cam = cv2.VideoCapture(params['client']['url'])
 
     while True:
@@ -46,6 +43,7 @@ def start_producer(params):
                 break
 
         except cv2.error as e:
+            log = CustomLogger(params['client']['sn'], 'mimir@producer')
             sys.stdout = open(os.devnull, 'w')
-            print(f"Erro OpenCV: {e}")
+            log.critical(f"Erro OpenCV: {e}")
             sys.stdout = sys.__stdout__

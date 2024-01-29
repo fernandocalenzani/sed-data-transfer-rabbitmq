@@ -5,9 +5,6 @@ from libs.utils.logger import CustomLogger
 
 def start_consumer(params):
     try:
-        log = CustomLogger(params['client']['sn'], 'mimir@consumer')
-        log.info(f"connecting to RabbitMQ")
-
         rabbitmq = Broker.RabbitMQ(
             params['rabbitmq']['host'],
             params['rabbitmq']['port'],
@@ -24,4 +21,5 @@ def start_consumer(params):
         rabbitmq.start(callback, f"queue_{params['client']['sn']}")
 
     except Exception as e:
+        log = CustomLogger(params['client']['sn'], 'mimir@consumer')
         log.error(f"error to try to connect with RabbitMQ: {e}")
