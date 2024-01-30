@@ -8,4 +8,4 @@ tqdm
 psutil
 tabulate
 requests
-logging
+asyncio

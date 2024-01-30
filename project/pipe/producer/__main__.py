@@ -6,7 +6,7 @@ from libs.utils.logger import CustomLogger
 
 
 def start(params):
-    log = CustomLogger(params['client']['sn'], 'mimir@producer')
+    log = CustomLogger(params['client']['sn'], 'producer')
     log.info(f"Creating new producer")
     log.info(f"ip: {params['client']['ip']}")
     log.info(f"name: {params['client']['name']}")

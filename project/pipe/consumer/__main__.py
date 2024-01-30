@@ -6,7 +6,7 @@ from libs.utils.logger import CustomLogger
 
 
 def start(params):
-    log = CustomLogger(params['client']['sn'], 'mimir@consumer')
+    log = CustomLogger(params['client']['sn'], 'consumer')
     log.info(f"Creating new consumer")
     log.info(f"ip: {params['client']['ip']}")
     log.info(f"name: {params['client']['name']}")

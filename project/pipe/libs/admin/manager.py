@@ -1,18 +1,20 @@
 import multiprocessing
 
-from tabulate import tabulate
 import psutil
+from libs.utils.logger import CustomLogger
+from tabulate import tabulate
 
 
 class TaskManager:
     def __init__(self):
         self.tasks = {}
+        self.log = CustomLogger('manager', 'admin')
 
     def __task_wrapper(self, task_function, params):
         try:
             task_function(params)
         except Exception as e:
-            print(f"Error in task: {e}")
+            self.log.error(f"Error in task: {e}")
 
     def manager__update_task(self, clients):
 
@@ -57,11 +59,9 @@ class TaskManager:
                         f"{cpu_percent:.2f}", f"{ram_usage:.2f}"])
 
         table = tabulate(rows, headers, tablefmt="fancy_grid")
-        print('- - - | Tasks | - - -')
-        print(table)
-        print('\n\n')
-        print('- - - | Logs | - - -')
-        print('\n')
+        self.log.graph('- - - - - - | Tasks | - - - - - -')
+        self.log.graph(table)
+        self.log.graph('- - - - - - | Logs | - - - - - -')
 
     def perform_action__start_task(self, task_function, params):
         process = multiprocessing.Process(
@@ -83,7 +83,7 @@ class TaskManager:
             else:
                 task_info["status"] = "done"
         else:
-            print(f"Task with sn {sn} not found")
+            self.log.warn(f"Task with sn {sn} not found")
 
     def perform_action__stop_all_task(self):
         for sn, task_info in self.tasks.items():

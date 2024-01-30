@@ -27,8 +27,10 @@ if __name__ == "__main__":
 
         os.system('clear')
 
-        log = CustomLogger('admin', 'mimir@manager')
-        log.table(data, headers)
+        log = CustomLogger('admin', 'manager')
+
+        log.introduction(data, headers)
+
         task_manager = Manager.TaskManager()
         task_manager.perform_action__stop_all_task()
 

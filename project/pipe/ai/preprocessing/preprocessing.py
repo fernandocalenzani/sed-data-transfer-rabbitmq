@@ -1,7 +1,7 @@
+import broker.rabbitmq as Broker
 import cv2
 import numpy as np
-import broker.rabbitmq as Broker
-
+from libs.utils.logger import CustomLogger
 
 font = cv2.FONT_HERSHEY_COMPLEX_SMALL
 cam = cv2.VideoCapture(0)

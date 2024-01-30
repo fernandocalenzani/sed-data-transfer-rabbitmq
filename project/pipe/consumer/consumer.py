@@ -21,5 +21,5 @@ def start_consumer(params):
         rabbitmq.start(callback, f"queue_{params['client']['sn']}")
 
     except Exception as e:
-        log = CustomLogger(params['client']['sn'], 'mimir@consumer')
+        log = CustomLogger(params['client']['sn'], 'consumer')
         log.error(f"error to try to connect with RabbitMQ: {e}")

@@ -5,13 +5,15 @@ import packages.checker.check_host as Checker
 import packages.utils.read_file as Reader
 from libs.utils.logger import CustomLogger
 
+log = CustomLogger('', 'mimir@ai')
+
 
 def main():
-    print("ai project started")
+    log.info("ai project started")
 
 
 if __name__ == "__main__":
-    log = CustomLogger(params['client']['sn'], 'mimir@ai')
+    log = CustomLogger('', 'mimir@ai')
 
     log.warn(f"AI Service")
 
