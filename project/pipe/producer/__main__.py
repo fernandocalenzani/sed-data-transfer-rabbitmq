@@ -1,7 +1,7 @@
 import time
 
 import libs.checker.check_host as Checker
-import producer.producer as Producer
+import producer.publisher_cam as Producer
 from libs.utils.logger import CustomLogger
 
 
@@ -13,7 +13,13 @@ def start(params):
 
     command = f"curl -i -u {params['rabbitmq']['username']}:{params['rabbitmq']['password']} http://{params['rabbitmq']['host_cli']}:{params['rabbitmq']['port_cli']}/api/vhosts"
 
-    if Checker.check_availability_http(command, 10, 15):
+    if Checker.check_availability_http(
+        command=command,
+        sn=params['client']['sn'],
+        service='consumer',
+        max_attempts=10,
+        wait_time=10,
+    ):
         time.sleep(2)
 
         params["client"]["url"] = f"rtsp://{params['client']['ip']}:{params['client']['port']}/video_stream"

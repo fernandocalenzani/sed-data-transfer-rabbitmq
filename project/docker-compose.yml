@@ -11,12 +11,12 @@ services:
       - RABBITMQ_DEFAULT_PASS=admin
     tty: true
 
-  mimir:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on:
-      - rabbitmq
-    env_file:
-      - settings/secrets/.env
-    tty: true
+  #mimir:
+  #  build:
+  #    context: .
+  #    dockerfile: Dockerfile
+  #  depends_on:
+  #    - rabbitmq
+  #  env_file:
+  #    - settings/secrets/.env
+  #  tty: true

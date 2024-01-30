@@ -1,6 +1,6 @@
 import time
 
-import consumer.consumer as Consumer
+import consumer.queue_cam as Consumer
 import libs.checker.check_host as Checker
 from libs.utils.logger import CustomLogger
 
@@ -13,7 +13,14 @@ def start(params):
 
     command = f"curl -i -u {params['rabbitmq']['username']}:{params['rabbitmq']['password']} http://{params['rabbitmq']['host_cli']}:{params['rabbitmq']['port_cli']}/api/vhosts"
 
-    if Checker.check_availability_http(command, 10, 15):
+    if Checker.check_availability_http(
+        command=command,
+        sn=params['client']['sn'],
+        service='consumer',
+        max_attempts=10,
+        wait_time=10,
+    ):
+
         time.sleep(2)
         Consumer.start_consumer(params)
 

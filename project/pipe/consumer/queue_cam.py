@@ -22,4 +22,4 @@ def start_consumer(params):
 
     except Exception as e:
         log = CustomLogger(params['client']['sn'], 'consumer')
-        log.error(f"error to try to connect with RabbitMQ: {e}")
+        log.error(e)

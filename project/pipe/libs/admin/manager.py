@@ -14,7 +14,7 @@ class TaskManager:
         try:
             task_function(params)
         except Exception as e:
-            self.log.error(f"Error in task: {e}")
+            self.log.error(e)
 
     def manager__update_task(self, clients):
 
@@ -24,6 +24,7 @@ class TaskManager:
                     'process': None,
                     'status': 0,
                     'params': client_value,
+                    'errors': 0,
                 }
 
         for sn, task in self.tasks.items():
@@ -34,12 +35,19 @@ class TaskManager:
 
         return self.tasks
 
+    def manager__update_error(self, sn):
+        self.tasks[sn]["status"] = 1
+
+        return self.tasks
+
     def manager__get_task(self):
         return self.tasks
 
     def manager__monitoring_task(self):
-        headers = ["SN", "Status", "PID", "IP", "Name", "CPU (%)", "RAM (MB)"]
+        headers = ["SN", "Status", "PID", "IP",
+                   "Name", "CPU (%)", "RAM (MB)", "Error"]
         rows = []
+        total_errors = 0
 
         for sn, task_info in self.tasks.items():
             status = task_info["status"]
@@ -49,14 +57,25 @@ class TaskManager:
 
             try:
                 process_info = psutil.Process(pid)
-                cpu_percent = 1000*process_info.cpu_percent(interval=0.1)
+                cpu_percent = process_info.cpu_percent(interval=0.1)
                 ram_usage = process_info.memory_info().rss / (1024 * 1024)
-            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+                error = 0
+
+            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess) as e:
                 cpu_percent = "N/A"
                 ram_usage = "N/A"
+                error = 1
+                total_errors += 1
 
             rows.append([sn, status, pid, ip, name,
-                        f"{cpu_percent:.2f}", f"{ram_usage:.2f}"])
+                        f"{cpu_percent:.2f}", f"{ram_usage:.2f}", error])
+
+        total_ram = sum(float(row[6]) for row in rows if row[6] != "N/A")
+        total_processes = len(rows)
+        total_cpu = sum(float(row[5]) for row in rows if row[5] != "N/A")
+
+        rows.append(["Total", total_processes, "-", "-", "-",
+                    f"{total_cpu:.2f}", f"{total_ram:.2f}", total_errors])
 
         table = tabulate(rows, headers, tablefmt="fancy_grid")
         self.log.graph('- - - - - - | Tasks | - - - - - -')
@@ -86,7 +105,8 @@ class TaskManager:
             self.log.warn(f"Task with sn {sn} not found")
 
     def perform_action__stop_all_task(self):
-        for sn, task_info in self.tasks.items():
-            task = task_info["process"]
-            task.terminate()
-            task.join()
+        if self.tasks.items() is not None:
+            for sn, task_info in self.tasks.items():
+                task = task_info["process"]
+                task.terminate()
+                task.join()

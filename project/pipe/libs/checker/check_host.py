@@ -23,8 +23,7 @@ def check_availability_http(command, sn, service, max_attempts=10, wait_time=10)
             if http_status == '200':
                 return True
         except Exception as e:
-            log.info(
-                f"[{attempts}] The command is not available.\nWaiting {wait_time}s before next attempt")
+            log.error(e)
 
         time.sleep(wait_time)
         attempts += 1

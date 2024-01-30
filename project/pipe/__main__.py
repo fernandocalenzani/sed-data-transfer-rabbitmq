@@ -32,10 +32,10 @@ if __name__ == "__main__":
         log.introduction(data, headers)
 
         task_manager = Manager.TaskManager()
+
         task_manager.perform_action__stop_all_task()
 
         while True:
-
             clients = ApiBackend.get_clients(clients)
 
             tasks = task_manager.manager__update_task(clients)
@@ -54,7 +54,7 @@ if __name__ == "__main__":
 
             os.system('clear')
 
-            log.table(data, headers)
+            log.introduction(data, headers)
             task_manager.manager__monitoring_task()
 
             time.sleep(update_interval)
@@ -64,4 +64,4 @@ if __name__ == "__main__":
         pass
 
     except Exception as e:
-        log.error(f"Error: {e}")
+        log.error(e)

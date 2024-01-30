@@ -21,7 +21,7 @@ def publish(params, frame):
 
     except Exception as e:
         log = CustomLogger(params['client']['sn'], 'producer')
-        log.error(f"error to try to publish data to exchange: {e}")
+        log.error(e)
 
 
 def start_producer(params):
@@ -44,6 +44,7 @@ def start_producer(params):
 
         except cv2.error as e:
             log = CustomLogger(params['client']['sn'], 'producer')
+            log.critical(e)
+
             sys.stdout = open(os.devnull, 'w')
-            log.critical(f"Erro OpenCV: {e}")
             sys.stdout = sys.__stdout__

@@ -10,6 +10,7 @@ def get_clients(online_clients):
     clients = {}
 
     url = f"http://{os.getenv('BACKEND_HOST')}:{os.getenv('BACKEND_PORT')}"
+
     api = ApiRequest(url)
 
     res = api.make_request(
