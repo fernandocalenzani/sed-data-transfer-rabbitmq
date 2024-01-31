@@ -13,6 +13,13 @@
 
 # <div align="center">Mimir Project</div>
 
+# Structure
+
+- [Backend](project/backend)
+- [Frontend](project/frontend)
+- [Infra](project/infra)
+- [Pipe](project/pipe)
+
 # Project Information
 
 - [Project Specification](info/project-specification.html)

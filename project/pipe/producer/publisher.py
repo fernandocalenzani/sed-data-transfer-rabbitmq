@@ -18,7 +18,7 @@ def publish(metadata, frame):
             params['rabbitmq']['password']
         )
 
-        queue = f"queue_D_FACE_{params['client']['sn']}"
+        queue = f"queue_CAM_{params['client']['sn']}"
 
         rabbitmq.publish_stream(
             f"exchange_{params['client']['sn']}", frame, 2, queue)

@@ -1,10 +1,10 @@
 data/
-.venv
+.venv/
 __pycache__/
+node_modules/
+dist/
+
 *.hdf5
 lbph_classifier_II.yml
 dist
 sdist
-
-node_modules/
-dist/

@@ -15,8 +15,8 @@ if __name__ == "__main__":
     try:
         clients = {}
         tasks = {}
+        
         update_interval = 5
-
         data = [
             ["Project", "Mimir"],
             ["Version", "0.1.0"],
