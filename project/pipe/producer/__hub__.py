@@ -1,11 +1,13 @@
 import time
 
 import libs.checker.check_host as Checker
-import producer.publisher_cam as Producer
+import producer.publisher as Producer
 from libs.utils.logger import CustomLogger
 
 
-def start(params):
+def start(metadata):
+    params = metadata['params']
+
     log = CustomLogger(params['client']['sn'], 'producer')
     log.info(f"Creating new producer")
     log.info(f"ip: {params['client']['ip']}")
@@ -24,7 +26,7 @@ def start(params):
 
         params["client"]["url"] = f"rtsp://{params['client']['ip']}:{params['client']['port']}/video_stream"
 
-        Producer.start_producer(params)
+        Producer.handler(metadata)
 
     else:
         log.info(f"broker not found, ending consumer")

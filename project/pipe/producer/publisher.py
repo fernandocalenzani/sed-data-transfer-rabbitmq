@@ -7,8 +7,10 @@ import libs.broker.rabbitmq as Broker
 from libs.utils.logger import CustomLogger
 
 
-def publish(params, frame):
+def publish(metadata, frame):
     try:
+        params = metadata["params"]
+
         rabbitmq = Broker.RabbitMQ(
             params['rabbitmq']['host'],
             params['rabbitmq']['port'],
@@ -16,15 +18,19 @@ def publish(params, frame):
             params['rabbitmq']['password']
         )
 
+        queue = f"queue_D_FACE_{params['client']['sn']}"
+
         rabbitmq.publish_stream(
-            f"exchange_{params['client']['sn']}", frame, 2, "")
+            f"exchange_{params['client']['sn']}", frame, 2, queue)
 
     except Exception as e:
         log = CustomLogger(params['client']['sn'], 'producer')
         log.error(e)
 
 
-def start_producer(params):
+def handler(metadata):
+    params = metadata['params']
+
     cam = cv2.VideoCapture(params['client']['url'])
 
     while True:
@@ -32,7 +38,7 @@ def start_producer(params):
             ok, frame = cam.read()
 
             if ok:
-                publish(params, frame)
+                publish(metadata, frame)
             else:
                 cam.release()
                 cv2.destroyAllWindows()
