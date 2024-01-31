@@ -182,51 +182,31 @@
 
    <pre>
 mimir/
-|-- _docs/
+|-- info/
 | |-- ...
 |
-|-- backend/
-| |-- Dockerfile
-| |-- src/
-| |-- ...
-|
-|-- frontend/
-| |-- Dockerfile
-| |-- src/
-| |-- ...
-|
-|-- consumer/
-| | |-- Dockerfile
-| | |-- src/
+|-- project/
+| |-- backend/
+| |-- frontend/
+| |-- pipe/
+| | |-- ai/
+| | |-- consumer/
+| | |-- handler/
+| | |-- libs/
+| | |-- producer/
+| | |-- __main__.py/
+| |
+| |-- settings/
+| | |-- secrets/
+| | |-- config/
 | | |-- ...
 | |
-|-- producer/
-| | |-- Dockerfile
-| | |-- src/
-| | |-- ...
-|
-|-- ai/
+| |-- .gitignore
+| |-- docker-compose.yml
 | |-- Dockerfile
-| |-- data/
-| |-- preprocessing/
-| |-- products/
-| | |-- d_face/
-| | |-- d_obj/
-| | |-- r_action/
-| | |-- r_emotion/
-| | |-- r_face/
-| | |-- t_objects/
-| |-- ...
+| |
+| |-- test/
 |
-|-- setup/
-| |-- libs/
-| |-- secrets/
-| |-- config/
-| |-- ...
-|
-|-- __start__.sh
-|-- .gitignore
-|-- docker-compose.yml
 |-- README.md
 
 

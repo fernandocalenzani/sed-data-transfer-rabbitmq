@@ -1,3 +1,17 @@
+# Project Commands
+
+```
+1. cd ./mimir
+2. cd ./mimir/scripts
+3. bash docker_clean_all.sh
+4. docker-compose down -v --rmi all
+5. docker-compose up --build -d --quiet-pull
+6. docker-compose -f logs mimir or docker-compose logs -f -n 100 mimir
+
+z. docker-compose run --rm mimir /bin/bash
+
+```
+
 ## Docker
 
 ```

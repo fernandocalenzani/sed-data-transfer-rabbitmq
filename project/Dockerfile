@@ -35,6 +35,7 @@ COPY pipe/consumer ./consumer/
 COPY pipe/producer ./producer/
 COPY pipe/ai ./ai/
 COPY pipe/ ./
+COPY infra/secrets/.env ./
 
 #............................
 # ---|CMD|---

@@ -25,6 +25,33 @@ class Callbacks:
         except Exception as e:
             print(e)
 
+    def get_callback_by_service(self, service):
+        try:
+            if (service == "CAM"):
+                return self.__callback_queue_cam
+
+            elif (service == "D_FACE"):
+                return self.__callback_queue_d_face
+
+            elif (service == "R_ACTION"):
+                return self.__callback_queue_r_action
+
+            elif (service == "R_EMOTION"):
+                return self.__callback_queue_r_emotion
+
+            elif (service == "R_FACE"):
+                return self.__callback_queue_r_face
+
+            elif (service == "T_OBJECT"):
+                return self.__callback_queue_t_object
+
+            else:
+                raise ValueError("Service is not available")
+
+        except ValueError as e:
+            log = CustomLogger('admin', 'manager')
+            log.error(e)
+
     def __callback_queue_cam(self, ch, method, properties, payload):
         try:
             metadata = self.__metadata(ch, method, properties, payload)
@@ -67,30 +94,3 @@ class Callbacks:
             print("callback_queue_t_object")
         except Exception as e:
             print(e)
-
-    def get_callback_by_service(self, service):
-        try:
-            if (service == "CAM"):
-                return self.__callback_queue_cam
-
-            elif (service == "D_FACE"):
-                return self.__callback_queue_d_face
-
-            elif (service == "R_ACTION"):
-                return self.__callback_queue_r_action
-
-            elif (service == "R_EMOTION"):
-                return self.__callback_queue_r_emotion
-
-            elif (service == "R_FACE"):
-                return self.__callback_queue_r_face
-
-            elif (service == "T_OBJECT"):
-                return self.__callback_queue_t_object
-
-            else:
-                raise ValueError("Service is not available")
-
-        except ValueError as e:
-            log = CustomLogger('admin', 'manager')
-            log.error(e)
