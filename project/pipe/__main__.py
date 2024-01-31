@@ -1,10 +1,10 @@
 import os
 import time
 
-import consumer.__main__ as Consumer
 import libs.admin.api_backend as ApiBackend
 import libs.admin.manager as Manager
-import producer.__main__ as Producer
+import producer.__hub__ as Producer
+from consumer.__hub__ import Consumer
 from dotenv import load_dotenv
 from libs.utils.logger import CustomLogger
 
@@ -16,6 +16,7 @@ if __name__ == "__main__":
         clients = {}
         tasks = {}
         update_interval = 5
+
         data = [
             ["Project", "Mimir"],
             ["Version", "0.1.0"],
@@ -43,10 +44,13 @@ if __name__ == "__main__":
             for sn, task_info in tasks.items():
 
                 if task_info['status'] == 0 or task_info['status'] == None:
-                    services = [(Consumer.start, task_info['params']),
-                                (Producer.start, task_info['params'])]
+                    pool = task_manager.perform_action_generate_pool(
+                        consumer_func=Consumer.start,
+                        producer_func=Producer.start,
+                        task_info=task_info
+                    )
 
-                    for function, params in services:
+                    for function, params in pool:
                         task_manager.perform_action__start_task(
                             function, params)
 

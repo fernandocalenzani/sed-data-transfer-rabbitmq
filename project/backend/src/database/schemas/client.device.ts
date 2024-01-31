@@ -13,6 +13,7 @@ const deviceSchema = new Schema<IDeviceSchema>(
     coords: [{ type: Number, required: false }],
     ip: { type: String, required: true, default: null },
     sn: { type: String, required: true, default: null },
+    services: [{ type: String, required: true, default: ["CAM"] }],
     port: { type: String, required: true, default: null },
     status: { type: Boolean, required: false, default: false },
     info: [{ type: String, default: false }],

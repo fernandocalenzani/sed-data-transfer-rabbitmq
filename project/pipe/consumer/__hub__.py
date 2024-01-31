@@ -1,11 +1,13 @@
 import time
 
-import consumer.queue_cam as Consumer
+import consumer.queues as Consumer
 import libs.checker.check_host as Checker
 from libs.utils.logger import CustomLogger
 
 
-def start(params):
+def start(metadata):
+    params = metadata['params']
+
     log = CustomLogger(params['client']['sn'], 'consumer')
     log.info(f"Creating new consumer")
     log.info(f"ip: {params['client']['ip']}")
@@ -22,7 +24,7 @@ def start(params):
     ):
 
         time.sleep(2)
-        Consumer.start_consumer(params)
+        Consumer.start(metadata)
 
     else:
         log.error(f"broker not found, ending consumer")

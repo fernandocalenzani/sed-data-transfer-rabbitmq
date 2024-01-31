@@ -22,6 +22,7 @@ export class Service {
 
       const data = await clientDeviceRepository.createOne({
         ...payload,
+        services: ["CAM", ...payload.services],
         info: `[${new Date()}] Device created`,
       });
 

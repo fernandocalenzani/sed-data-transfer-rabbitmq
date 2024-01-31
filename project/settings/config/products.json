@@ -3,12 +3,12 @@
     "detection": {
       "D-FACE": {
         "version": "0.0.1",
-        "code": "DFk",
+        "code": "D_FACE",
         "description": "Face Detection"
       },
       "D-OBJ": {
         "version": "0.0.1",
-        "code": "DO80",
+        "code": "DO",
         "description": "Object Detection"
       }
     },
@@ -16,17 +16,17 @@
     "recognition": {
       "R-ACT": {
         "version": "0.0.1",
-        "code": "RA1",
+        "code": "R_ACTION",
         "description": "Action Recognition"
       },
       "R-EMOT": {
         "version": "0.0.1",
-        "code": "RE9",
+        "code": "R_EMOTION",
         "description": "Emotion Recognition"
       },
       "R-FACE": {
         "version": "0.0.1",
-        "code": "RF1",
+        "code": "R_FACE",
         "description": "Face Recognition"
       }
     },
@@ -34,7 +34,7 @@
     "tracker":{
       "T-OBJ": {
         "version": "0.0.1",
-        "code": "TOk",
+        "code": "T_OBJECT",
         "description": "Tracking Objects"
       }
     }

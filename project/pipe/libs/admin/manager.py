@@ -1,6 +1,7 @@
 import multiprocessing
 
 import psutil
+from handler.callbacks import Callbacks
 from libs.utils.logger import CustomLogger
 from tabulate import tabulate
 
@@ -8,6 +9,11 @@ from tabulate import tabulate
 class TaskManager:
     def __init__(self):
         self.tasks = {}
+        self.config = {
+            "services": ["CAM", "D_FACE", "R_ACTION",
+                         "R_EMOTION", "R_FACE", "T_OBJECT"
+                         ]
+        }
         self.log = CustomLogger('manager', 'admin')
 
     def __task_wrapper(self, task_function, params):
@@ -15,6 +21,12 @@ class TaskManager:
             task_function(params)
         except Exception as e:
             self.log.error(e)
+
+    def manager__get_config(self):
+        return self.config
+
+    def manager__get_task(self):
+        return self.tasks
 
     def manager__update_task(self, clients):
 
@@ -82,12 +94,12 @@ class TaskManager:
         self.log.graph(table)
         self.log.graph('- - - - - - | Logs | - - - - - -')
 
-    def perform_action__start_task(self, task_function, params):
+    def perform_action__start_task(self, task_function, metadata):
         process = multiprocessing.Process(
-            target=self.__task_wrapper, args=(task_function, params))
+            target=self.__task_wrapper, args=(task_function, metadata))
         process.start()
 
-        self.tasks[params['client']['sn']]['process'] = process
+        self.tasks[metadata['params']['client']['sn']]['process'] = process
 
     def perform_action__stop_task(self, sn):
         if sn in self.tasks:
@@ -110,3 +122,27 @@ class TaskManager:
                 task = task_info["process"]
                 task.terminate()
                 task.join()
+
+    def perform_action_generate_pool(self, consumer_func, producer_func, task_info):
+        services = task_info['params']['client']['services']
+
+        callbacks = Callbacks()
+
+        pool = [
+            (producer_func, {
+                "params": task_info['params'],
+                "service": services[0],
+                "callback": callbacks.get_callback_by_service("CAM")
+            })
+        ]
+
+        for i in range(0, len(services)):
+            metadata = {
+                "params": task_info['params'],
+                "service": services[i],
+                "callback": callbacks.get_callback_by_service(services[i])
+            }
+
+            pool.append((consumer_func, metadata))
+
+        return pool

@@ -19,6 +19,7 @@ export const updateSchema = z.object({
   description: z.string().optional(),
   coords: z.array(z.number()).optional(),
   ip: z.string().optional(),
+  services: z.array(z.string()),
   sn: z.string().optional(),
   port: z.string().optional(),
   status: z.boolean().optional(),

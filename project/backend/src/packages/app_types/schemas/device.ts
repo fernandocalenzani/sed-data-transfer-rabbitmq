@@ -7,6 +7,7 @@ export interface IDeviceSchema extends IMongoDefaults {
   coords: number[];
   ip: string | null;
   sn: string;
+  services: string[];
   port: string | null;
   status: boolean;
   info: String[] | null;

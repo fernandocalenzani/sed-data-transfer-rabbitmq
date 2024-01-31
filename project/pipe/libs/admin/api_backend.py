@@ -30,6 +30,7 @@ def get_clients(online_clients):
                         "name": client['name'],
                         "port": client['port'],
                         "sn": client['sn'],
+                        "services": client['services'],
                     },
                     "rabbitmq": {
                         "username":  os.getenv("RABBIT_USERNAME"),
@@ -48,6 +49,7 @@ def get_clients(online_clients):
                         "name": client['name'],
                         "port": client['port'],
                         "sn": client['sn'],
+                        "services": client['services'],
                     },
                     "rabbitmq": {
                         "username":  os.getenv("RABBIT_USERNAME"),

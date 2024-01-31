@@ -25,16 +25,15 @@ class RabbitMQ:
 
         return connection, channel
 
-    def build_broker(self, exchange_name, queue_name, routing_key):
+    def build_broker(self, exchange_name, queue, routing_key=None):
 
         self.__channel.exchange_declare(exchange=exchange_name,
                                         exchange_type='direct'
                                         )
 
-        self.__channel.queue_declare(queue=queue_name, durable=True)
-
+        self.__channel.queue_declare(queue=f'{queue}', durable=True)
         self.__channel.queue_bind(
-            exchange=exchange_name, queue=queue_name, routing_key=routing_key)
+            exchange=exchange_name, queue=f'{queue}', routing_key=routing_key)
 
     def set_queue(self, queue, callback_message):
         self.__channel.queue_declare(
@@ -45,7 +44,7 @@ class RabbitMQ:
         return self.__channel.basic_consume(queue=queue, auto_ack=True,
                                             on_message_callback=callback_message)
 
-    def publish_stream(self, exchange, body, mode, routing_key):
+    def publish_stream(self, exchange, body, mode, routing_key=None):
         self.__channel.basic_publish(exchange=exchange,
                                      routing_key=routing_key,
                                      body=self.frame_to_bytes(body),
@@ -59,7 +58,7 @@ class RabbitMQ:
     def bytes_to_frame(self, frame_bytes):
         return pickle.loads(frame_bytes)
 
-    def start(self, callback, queue):
+    def start(self, queue, callback):
         self.set_queue(queue, callback)
         self.__channel.start_consuming()
 

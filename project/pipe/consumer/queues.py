@@ -1,10 +1,13 @@
 import libs.broker.rabbitmq as Broker
-from consumer.callback import callback
 from libs.utils.logger import CustomLogger
 
 
-def start_consumer(params):
+def start(metadata):
     try:
+        params = metadata["params"]
+        service = metadata["service"]
+        callback = metadata["callback"]
+
         rabbitmq = Broker.RabbitMQ(
             params['rabbitmq']['host'],
             params['rabbitmq']['port'],
@@ -12,13 +15,15 @@ def start_consumer(params):
             params['rabbitmq']['password']
         )
 
+        queue = f"queue_{service}_{params['client']['sn']}"
+
         rabbitmq.build_broker(
             f"exchange_{params['client']['sn']}",
-            f"queue_{params['client']['sn']}",
-            ""
+            queue,
+            queue
         )
 
-        rabbitmq.start(callback, f"queue_{params['client']['sn']}")
+        rabbitmq.start(queue, callback)
 
     except Exception as e:
         log = CustomLogger(params['client']['sn'], 'consumer')
