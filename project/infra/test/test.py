@@ -1,49 +1,25 @@
-import asyncio
+import cv2
+import numpy as np
 
+# Configurações do vídeo
+output_path = 'video.avi'
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+fps = 1
+frame_size = (640, 480)
 
-async def main():
-    loop = asyncio.get_event_loop()
+# Inicializa o VideoWriter
+out = cv2.VideoWriter(output_path, fourcc, fps, frame_size)
 
-    tasks = [
-        loop.create_task(function1()),
-        loop.create_task(function2()),
-        loop.create_task(function3())
-    ]
+cap = cv2.VideoCapture(0)
 
-    # Aguardar a conclusão de todas as tarefas
-    resultados = await asyncio.gather(*tasks)
+for i in range(10):
+    # Gera 10 frames simples e adiciona ao vídeo
+    ok, frame = cap.read()
 
-    print("Resultados finais:")
-    for resultado in resultados:
-        print(resultado)
+    # Adiciona o frame ao vídeo
+    out.write(frame)
 
-if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    try:
-        loop.run_until_complete(main())
-    finally:
-        loop.close()
+# Libera o objeto VideoWriter
+out.release()
 
-
-"""
-        data = pickle.loads(payload)
-        processed_image = process_image(data)
-
-        send_response_to_client(
-            processed_image, metadata['method']['exchange'])
-
-def process_image(payload):
-    processed_image = cv2.cvtColor(payload, cv2.COLOR_BGR2GRAY)
-    return processed_image
-
-
-def send_response_to_client(payload, exchange):
-    try:
-        cv2.imwrite("processed_image_" + str(exchange) +
-                    "_" + str(datetime.now()) + ".jpg", payload)
-
-        print(f"{datetime.now()} Resposta enviada para o cliente: {exchange}.")
-
-    except Exception as e:
-        print(e)
- """
+print("Vídeo gerado com sucesso.")

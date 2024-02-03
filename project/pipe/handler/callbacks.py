@@ -1,4 +1,9 @@
-from handler.build_video_response import BuildVideoResponse
+import asyncio
+import pickle
+import time
+from datetime import datetime
+
+import cv2
 from libs.utils.logger import CustomLogger
 
 
@@ -6,8 +11,9 @@ class Callbacks:
     def __init__(self):
         log = CustomLogger('callbacks', 'manager')
         self.log = log
-        self.builder_video = BuildVideoResponse(
-            1, 640, 480, 'video.avi')
+        self.loop = asyncio.get_event_loop()
+
+        # self.builder_video = BuildVideoResponse('data/video')
 
     def get_callback_by_service(self, service):
         try:
@@ -41,7 +47,7 @@ class Callbacks:
                 'ch': {},
                 'method': {},
                 'properties': {},
-                'data': payload
+                'frame': pickle.loads(payload)
             }
 
             metadata['ch']['channel_number'] = ch.channel_number
@@ -58,49 +64,79 @@ class Callbacks:
         except Exception as e:
             self.log.error(e)
 
+    def __controller(self, ch, method, properties, payload):
+
+        task_d_face = self.loop.create_task(self.__callback_queue_d_face(
+            ch, method, properties, payload))
+
+        task_r_action = self.loop.create_task(self.__callback_queue_r_action(
+            ch, method, properties, payload))
+
+        task_r_emotion = self.loop.create_task(self.__callback_queue_r_emotion(
+            ch, method, properties, payload))
+
+        task_r_face = self.loop.create_task(self.__callback_queue_r_face(
+            ch, method, properties, payload))
+
+        task_t_object = self.loop.create_task(self.__callback_queue_t_object(
+            ch, method, properties, payload))
+
+        resultados = self.loop.run_until_complete(
+            asyncio.gather(
+                task_d_face,
+                task_r_action,
+                task_r_emotion,
+                task_r_face,
+                task_t_object
+            ))
+
+        return resultados
+
     def __callback_queue_cam(self, ch, method, properties, payload):
         try:
             metadata = self.__metadata(ch, method, properties, payload)
 
-            if (self.builder_video.get_n_frames() >= 400):
-                self.builder_video.release_resources()
-            else:
-                self.builder_video.append_frames_to_video(payload)
+            self.__controller(
+                ch, method, properties, metadata)
 
         except Exception as e:
             self.log.error(e)
 
-    def __callback_queue_d_face(self, ch, method, properties, payload):
+    async def __callback_queue_d_face(self, ch, method, properties, payload):
         try:
-            metadata = self.__metadata(ch, method, properties, payload)
-            print("callback_queue_d_face")
+            cv2.imwrite(
+                f'data/d_face_{str(datetime.now())}.jpg', payload['frame'])
+
         except Exception as e:
             self.log.error(e)
 
-    def __callback_queue_r_action(self, ch, method, properties, payload):
+    async def __callback_queue_r_action(self, ch, method, properties, payload):
         try:
-            metadata = self.__metadata(ch, method, properties, payload)
-            print("callback_queue_r_action")
+            cv2.imwrite(
+                f'data/r_action_{str(datetime.now())}.jpg', payload['frame'])
+
         except Exception as e:
             self.log.error(e)
 
-    def __callback_queue_r_emotion(self, ch, method, properties, payload):
+    async def __callback_queue_r_emotion(self, ch, method, properties, payload):
         try:
-            metadata = self.__metadata(ch, method, properties, payload)
-            print("callback_queue_r_emotion")
+            cv2.imwrite(
+                f'data/r_emotion_{str(datetime.now())}.jpg', payload['frame'])
+
         except Exception as e:
             self.log.error(e)
 
-    def __callback_queue_r_face(self, ch, method, properties, payload):
+    async def __callback_queue_r_face(self, ch, method, properties, payload):
         try:
-            metadata = self.__metadata(ch, method, properties, payload)
-            print("callback_queue_r_face")
+            cv2.imwrite(
+                f'data/r_face_{str(datetime.now())}.jpg', payload['frame'])
+
         except Exception as e:
             self.log.error(e)
 
-    def __callback_queue_t_object(self, ch, method, properties, payload):
+    async def __callback_queue_t_object(self, ch, method, properties, payload):
         try:
-            metadata = self.__metadata(ch, method, properties, payload)
-            print("callback_queue_t_object")
+            cv2.imwrite(
+                f'data/t_object_{str(datetime.now())}.jpg', payload['frame'])
         except Exception as e:
             self.log.error(e)

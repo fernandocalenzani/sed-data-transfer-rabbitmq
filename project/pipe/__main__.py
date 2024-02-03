@@ -6,6 +6,7 @@ import libs.admin.manager as Manager
 import producer.__hub__ as Producer
 from consumer.__hub__ import Consumer
 from dotenv import load_dotenv
+from libs.admin.config import Config
 from libs.utils.logger import CustomLogger
 
 load_dotenv()
@@ -13,26 +14,19 @@ load_dotenv()
 
 if __name__ == "__main__":
     try:
-        clients = {}
-        tasks = {}
-        
-        update_interval = 5
-        data = [
-            ["Project", "Mimir"],
-            ["Version", "0.1.0"],
-            ["Company", "Arise Technology"],
-            ["Setting", f"update each {update_interval}s"],
-            ["License", "12345-6"],
-        ]
-        headers = ["Info", "Value"]
-
         os.system('clear')
 
+        clients = {}
+        tasks = {}
+
         log = CustomLogger('admin', 'manager')
+        task_manager = Manager.TaskManager()
+        config = Config()
+
+        data, headers = config.get_project_info()
+        update_interval = config.get_update_interval()
 
         log.introduction(data, headers)
-
-        task_manager = Manager.TaskManager()
 
         task_manager.perform_action__stop_all_task()
 
@@ -56,7 +50,7 @@ if __name__ == "__main__":
 
                 time.sleep(5)
 
-            os.system('clear')
+            # os.system('clear')
 
             log.introduction(data, headers)
             task_manager.manager__monitoring_task()

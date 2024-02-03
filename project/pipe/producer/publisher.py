@@ -39,6 +39,7 @@ def handler(metadata):
 
             if ok:
                 publish(metadata, frame)
+
             else:
                 cam.release()
                 cv2.destroyAllWindows()
