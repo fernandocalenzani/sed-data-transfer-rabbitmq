@@ -9,3 +9,5 @@ lbph_classifier_II.yml
 dist
 sdist
 data/
+*.onnx
+*.pt

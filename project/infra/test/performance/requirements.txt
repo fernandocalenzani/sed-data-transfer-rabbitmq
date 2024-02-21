@@ -1,5 +1,0 @@
-objgraph
-asyncio
-functools
-memory-profiler
-matplotlib

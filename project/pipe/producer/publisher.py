@@ -9,6 +9,7 @@ from libs.utils.logger import CustomLogger
 
 def publish(metadata, frame):
     try:
+
         params = metadata["params"]
 
         rabbitmq = Broker.RabbitMQ(

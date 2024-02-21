@@ -10,9 +10,13 @@ class TaskManager:
     def __init__(self):
         self.tasks = {}
         self.config = {
-            "services": ["CAM", "D_FACE", "R_ACTION",
-                         "R_EMOTION", "R_FACE", "T_OBJECT"
-                         ]
+            "services": ["CAM"],
+            "ai": {
+                "d_object": {
+                    "conf": 0.5,
+                    "model": "ai/yolov8n.pt",
+                }
+            }
         }
         self.log = CustomLogger('manager', 'admin')
 
@@ -136,6 +140,7 @@ class TaskManager:
             })
         ]
 
+        # create one queue for each service
         for i in range(0, len(services)):
             metadata = {
                 "params": task_info['params'],

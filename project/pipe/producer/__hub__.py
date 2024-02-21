@@ -9,9 +9,9 @@ def start(metadata):
     params = metadata['params']
 
     log = CustomLogger(params['client']['sn'], 'producer')
-    log.info(f"Creating new producer")
-    log.info(f"ip: {params['client']['ip']}")
-    log.info(f"name: {params['client']['name']}")
+    log.warn(f"Creating new producer")
+    log.warn(f"ip: {params['client']['ip']}")
+    log.warn(f"name: {params['client']['name']}")
 
     command = f"curl -i -u {params['rabbitmq']['username']}:{params['rabbitmq']['password']} http://{params['rabbitmq']['host_cli']}:{params['rabbitmq']['port_cli']}/api/vhosts"
 
@@ -29,4 +29,4 @@ def start(metadata):
         Producer.handler(metadata)
 
     else:
-        log.info(f"broker not found, ending consumer")
+        log.error(f"broker not found, ending consumer")

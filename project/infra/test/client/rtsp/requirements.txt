@@ -1,3 +1,0 @@
-argparse
-cv2
-gi

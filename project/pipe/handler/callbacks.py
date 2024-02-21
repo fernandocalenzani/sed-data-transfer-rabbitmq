@@ -4,16 +4,18 @@ import time
 from datetime import datetime
 
 import cv2
+import torch
+from ai.__hub__ import Predictions
 from libs.utils.logger import CustomLogger
+from super_gradients.training import models
 
 
 class Callbacks:
     def __init__(self):
         log = CustomLogger('callbacks', 'manager')
+        self.ai_model_d_obj = Predictions()
         self.log = log
         self.loop = asyncio.get_event_loop()
-
-        # self.builder_video = BuildVideoResponse('data/video')
 
     def get_callback_by_service(self, service):
         try:
@@ -65,6 +67,8 @@ class Callbacks:
             self.log.error(e)
 
     def __controller(self, ch, method, properties, payload):
+        task_d_obj = self.loop.create_task(self.__callback_queue_d_object(
+            ch, method, properties, payload))
 
         task_d_face = self.loop.create_task(self.__callback_queue_d_face(
             ch, method, properties, payload))
@@ -83,6 +87,7 @@ class Callbacks:
 
         resultados = self.loop.run_until_complete(
             asyncio.gather(
+                task_d_obj,
                 task_d_face,
                 task_r_action,
                 task_r_emotion,
@@ -96,47 +101,50 @@ class Callbacks:
         try:
             metadata = self.__metadata(ch, method, properties, payload)
 
-            self.__controller(
-                ch, method, properties, metadata)
+            self.__controller(ch, method, properties, metadata)
+
+        except Exception as e:
+            self.log.error(e)
+
+    async def __callback_queue_d_object(self, ch, method, properties, payload):
+        try:
+            print("__callback_queue_d_object")
+            #result = self.ai_model_d_obj.d_object(payload['frame'])
 
         except Exception as e:
             self.log.error(e)
 
     async def __callback_queue_d_face(self, ch, method, properties, payload):
         try:
-            cv2.imwrite(
-                f'data/d_face_{str(datetime.now())}.jpg', payload['frame'])
+            print("__callback_queue_d_face")
 
         except Exception as e:
             self.log.error(e)
 
     async def __callback_queue_r_action(self, ch, method, properties, payload):
         try:
-            cv2.imwrite(
-                f'data/r_action_{str(datetime.now())}.jpg', payload['frame'])
+            print("__callback_queue_r_action")
 
         except Exception as e:
             self.log.error(e)
 
     async def __callback_queue_r_emotion(self, ch, method, properties, payload):
         try:
-            cv2.imwrite(
-                f'data/r_emotion_{str(datetime.now())}.jpg', payload['frame'])
+            print("__callback_queue_r_emotion")
 
         except Exception as e:
             self.log.error(e)
 
     async def __callback_queue_r_face(self, ch, method, properties, payload):
         try:
-            cv2.imwrite(
-                f'data/r_face_{str(datetime.now())}.jpg', payload['frame'])
+            print("__callback_queue_r_face")
 
         except Exception as e:
             self.log.error(e)
 
     async def __callback_queue_t_object(self, ch, method, properties, payload):
         try:
-            cv2.imwrite(
-                f'data/t_object_{str(datetime.now())}.jpg', payload['frame'])
+            print("__callback_queue_t_object")
+
         except Exception as e:
             self.log.error(e)
