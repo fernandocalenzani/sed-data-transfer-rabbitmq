@@ -11,3 +11,4 @@ sdist
 data/
 *.onnx
 *.pt
+.env
