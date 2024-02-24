@@ -23,7 +23,7 @@ export interface IRepository<T> {
    * @returns {Promise<any>}
    *
    * @example
-   * const payload = { name: "Arise Technology" } as CreateModelDto
+   * const payload = { name: "fernandocalenzani" } as CreateModelDto
    * this.repository.createOne(payload);
    */
   createOne(payload: any): Promise<any>;
@@ -34,7 +34,7 @@ export interface IRepository<T> {
    * @returns {Promise<any>}
    *
    * @example
-   * const payload = [{ name: "Arise Technology" }, { name: "Soil App" }] as CreateModelDto[]
+   * const payload = [{ name: "fernandocalenzani" }, { name: "App" }] as CreateModelDto[]
    * this.repository.createMany(payload);
    */
   createMany(payload: any): Promise<any>;
@@ -47,7 +47,7 @@ export interface IRepository<T> {
    * @returns {Promise<any | null>}
    *
    * @example
-   * const payload = { name: "Arise Technology Updated" } as UpdateModelDto
+   * const payload = { name: "fernandocalenzani Updated" } as UpdateModelDto
    * this.repository.updateOne(_id , payload, true);
    */
   updateOne(
@@ -63,8 +63,8 @@ export interface IRepository<T> {
    * @returns {Promise<any | null>}
    *
    * @example
-   * const query = { email: "arise@email.com" }
-   * const payload = {name: "Arise Technology"}
+   * const query = { email: "fernandocalenzani@gmail.com" }
+   * const payload = {name: "fernandocalenzani"}
    * this.repository.updateOne(_id , payload);
    */
   updateAny(query: any, payload: UpdateQuery<T>): Promise<any | null>;
@@ -76,8 +76,8 @@ export interface IRepository<T> {
    * @returns {Promise<any | null>}
    *
    * @example
-   * const query = ["63c051f9d08f86668030b16c", "63c072b5d08f86668030b17d"]
-   * const payload = {name: "Arise Technology"}
+   * const query = ["aaaaa", "bbbbb"]
+   * const payload = {name: "fernandocalenzani"}
    * this.repository.updateMany(query , payload);
    */
   updateMany(filter: any, payload: UpdateQuery<T>): Promise<any | null>;
@@ -96,7 +96,7 @@ export interface IRepository<T> {
    * @returns {Promise<T[]>}
    *
    * @example
-   * const filtered = { name: "Arise Technology" } as FilterQuery<IModel>
+   * const filtered = { name: "fernandocalenzani" } as FilterQuery<IModel>
    * const populateFields = { model: 'model' }
    * const match = { field: 'field' }
    * const populateCascate = {

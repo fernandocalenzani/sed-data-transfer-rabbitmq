@@ -16,7 +16,7 @@ class Config:
         return [
             ["Project", "Mimir"],
             ["Version", "0.1.0"],
-            ["Company", "Arise Technology"],
+            ["Company", "-"],
             ["Setting", f"update each {self.update_interval}s"],
             ["License", "12345-6"],
         ], ["Info", "Value"]
