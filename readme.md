@@ -1,12 +1,8 @@
-# <div align="center">ARISE TECHNOLOGY</div>
-
-<p align="center">
-  <img src="./info/logo-arise.png" alt="Logo da minha empresa" width="200"/>
-</p>
+# <div align="center">RabbitMQ Project</div>
 
 <p align="left">
 <strong>Contact Informations:</strong>
-   <p>email: projects@arisetechnology.com.br</p>
+   <p>email: fernandocalenzani@gmail.com</p>
    <p>phone: +55 27 999553448</p>
    <p>Address: Vitória-ES, Brazil</p>
 </p>
